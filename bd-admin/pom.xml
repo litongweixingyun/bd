@@ -46,6 +46,13 @@
             <version>${bd.version}</version>
         </dependency>
 
+        <!-- 代码生成-->
+        <dependency>
+            <groupId>com.bd</groupId>
+            <artifactId>bd-generator</artifactId>
+            <version>${bd.version}</version>
+        </dependency>
+
 
     </dependencies>
 

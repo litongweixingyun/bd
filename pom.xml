@@ -13,6 +13,7 @@
         <module>bd-framework</module>
         <module>bd-system</module>
         <module>bd-admin</module>
+        <module>bd-generator</module>
     </modules>
     <properties>
         <bd.version>1.0</bd.version>
@@ -171,6 +172,13 @@
             <dependency>
                 <groupId>com.bd</groupId>
                 <artifactId>bd-system</artifactId>
+                <version>${bd.version}</version>
+            </dependency>
+
+            <!-- 代码生成-->
+            <dependency>
+                <groupId>com.bd</groupId>
+                <artifactId>bd-generator</artifactId>
                 <version>${bd.version}</version>
             </dependency>
 
