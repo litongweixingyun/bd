@@ -104,6 +104,7 @@ public class Shop extends BaseEntity
 		return delFlag;
 	}
 
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("shopId", getShopId())

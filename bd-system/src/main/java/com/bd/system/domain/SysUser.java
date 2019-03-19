@@ -77,6 +77,8 @@ public class SysUser extends BaseEntity
     @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT)
     private SysDept dept;
 
+    private String token;
+
     private List<SysRole> roles;
 
     /** 角色组 */
@@ -287,6 +289,14 @@ public class SysUser extends BaseEntity
     public void setPostIds(Long[] postIds)
     {
         this.postIds = postIds;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

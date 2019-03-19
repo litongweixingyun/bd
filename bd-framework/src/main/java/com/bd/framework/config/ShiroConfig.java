@@ -267,6 +267,9 @@ public class ShiroConfig
         shiroFilterFactoryBean.setUnauthorizedUrl(unauthorizedUrl);
         // Shiro连接约束配置，即过滤链的定义
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+
+        filterChainDefinitionMap.put("/mobile/**", "anon");
+
         // 对静态资源设置匿名访问
         filterChainDefinitionMap.put("/favicon.ico**", "anon");
         filterChainDefinitionMap.put("/bd.png**", "anon");

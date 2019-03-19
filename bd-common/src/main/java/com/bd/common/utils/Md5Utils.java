@@ -1,5 +1,6 @@
 package com.bd.common.utils;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +15,7 @@ public class Md5Utils
 {
     private static final Logger log = LoggerFactory.getLogger(Md5Utils.class);
 
-    private static byte[] md5(String s)
+    public static byte[] md5(String s)
     {
         MessageDigest algorithm;
         try
@@ -63,5 +64,10 @@ public class Md5Utils
             log.error("not supported charset...{}", e);
             return s;
         }
+    }
+
+    public static void main(String[] args) {
+        String admin123 = DigestUtils.md5Hex("admin123");
+        System.out.println(admin123);
     }
 }
