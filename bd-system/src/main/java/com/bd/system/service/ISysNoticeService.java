@@ -50,4 +50,6 @@ public interface ISysNoticeService
      * @return 结果
      */
     public int deleteNoticeByIds(String ids);
+
+    SysNotice selectNoticeByTypeAndMonth(int noticeType);
 }

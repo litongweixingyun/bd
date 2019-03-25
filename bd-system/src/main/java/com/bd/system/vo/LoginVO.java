@@ -12,12 +12,11 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class LoginVO {
-
     @NotNull
     @IsMobile
-    private String mobile;
+    private String phone;
 
     @NotNull
     @Length(min=32)
-    private String password;
+    private String pass;
 }

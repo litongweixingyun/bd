@@ -80,4 +80,9 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     {
         return noticeMapper.deleteNoticeByIds(Convert.toStrArray(ids));
     }
+
+    @Override
+    public SysNotice selectNoticeByTypeAndMonth(int noticeType) {
+        return noticeMapper.selectNoticeByTypeAndMonth(noticeType);
+    }
 }

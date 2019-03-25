@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bd.system.mapper.ShopPositionMapper">
+    
+    <resultMap type="ShopPosition" id="ShopPositionResult">
+        <result property="shopId"    column="shop_id"    />
+        <result property="positionId"    column="position_id"    />
+        <result property="shopPositionName"    column="shop_position_name"    />
+        <result property="sort"    column="sort"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectShopPositionVo">
+        select shop_id, position_id, shop_position_name, sort, create_by, create_time, update_by, update_time from shop_position
+    </sql>
+	
+    <select id="selectShopPositionList" parameterType="ShopPosition" resultMap="ShopPositionResult">
+        <include refid="selectShopPositionVo"/>
+        <where>  
+            <if test="shopId != null "> and shop_id = #{shopId}</if>
+             <if test="positionId != null "> and position_id = #{positionId}</if>
+             <if test="shopPositionName != null  and shopPositionName != '' "> and shop_position_name = #{shopPositionName}</if>
+             <if test="sort != null "> and sort = #{sort}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectShopPositionById" parameterType="Integer" resultMap="ShopPositionResult">
+        <include refid="selectShopPositionVo"/>
+        where shop_id = #{shopId}
+    </select>
+        
+    <insert id="insertShopPosition" parameterType="ShopPosition">
+        insert into shop_position
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="shopId != null  ">shop_id,</if>
+			<if test="positionId != null  ">position_id,</if>
+			<if test="shopPositionName != null  and shopPositionName != ''  ">shop_position_name,</if>
+			<if test="sort != null  ">sort,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateTime != null  ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="shopId != null  ">#{shopId},</if>
+			<if test="positionId != null  ">#{positionId},</if>
+			<if test="shopPositionName != null  and shopPositionName != ''  ">#{shopPositionName},</if>
+			<if test="sort != null  ">#{sort},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateShopPosition" parameterType="ShopPosition">
+        update shop_position
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="positionId != null  ">position_id = #{positionId},</if>
+            <if test="shopPositionName != null  and shopPositionName != ''  ">shop_position_name = #{shopPositionName},</if>
+            <if test="sort != null  ">sort = #{sort},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+        </trim>
+        where shop_id = #{shopId}
+    </update>
+
+	<delete id="deleteShopPositionById" parameterType="Integer">
+        delete from shop_position where shop_id = #{shopId}
+    </delete>
+	
+    <delete id="deleteShopPositionByIds" parameterType="String">
+        delete from shop_position where shop_id in 
+        <foreach item="shopId" collection="array" open="(" separator="," close=")">
+            #{shopId}
+        </foreach>
+    </delete>
+    
+</mapper>

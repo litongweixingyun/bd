@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bd.system.mapper.ScheduleMapper">
+    
+    <resultMap type="Schedule" id="ScheduleResult">
+        <result property="scheduleId"    column="schedule_id"    />
+        <result property="shopId"    column="shop_id"    />
+        <result property="shopName"    column="shop_name"    />
+        <result property="shopPositionId"    column="shop_position_id"    />
+        <result property="shopPositionName"    column="shop_position_name"    />
+        <result property="charger"    column="charger"    />
+        <result property="scheduleName"    column="schedule_name"    />
+        <result property="scheduleArea"    column="schedule_area"    />
+        <result property="startTime"    column="startTime"    />
+        <result property="endTime"    column="endTime"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectScheduleVo">
+        select schedule_id, shop_id, shop_position_id, charger, schedule_name, schedule_area, startTime, endTime, create_by, create_time, update_by, update_time from schedule
+    </sql>
+	
+    <select id="selectScheduleList" parameterType="Schedule" resultMap="ScheduleResult">
+        <include refid="selectScheduleVo"/>
+        <where>  
+            <if test="scheduleId != null "> and schedule_id = #{scheduleId}</if>
+             <if test="shopId != null "> and shop_id = #{shopId}</if>
+             <if test="shopPositionId != null "> and shop_position_id = #{shopPositionId}</if>
+             <if test="charger != null  and charger != '' "> and charger = #{charger}</if>
+             <if test="scheduleName != null  and scheduleName != '' "> and schedule_name = #{scheduleName}</if>
+             <if test="scheduleArea != null  and scheduleArea != '' "> and schedule_area = #{scheduleArea}</if>
+             <if test="startTime != null "> and startTime = #{startTime}</if>
+             <if test="endTime != null "> and endTime = #{endTime}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectScheduleById" parameterType="Integer" resultMap="ScheduleResult">
+        <include refid="selectScheduleVo"/>
+        where schedule_id = #{scheduleId}
+    </select>
+
+
+    <insert id="insertSchedule" parameterType="Schedule" useGeneratedKeys="true" keyProperty="scheduleId">
+        insert into schedule
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="shopId != null  ">shop_id,</if>
+			<if test="shopPositionId != null  ">shop_position_id,</if>
+			<if test="charger != null  and charger != ''  ">charger,</if>
+			<if test="scheduleName != null  and scheduleName != ''  ">schedule_name,</if>
+			<if test="scheduleArea != null  and scheduleArea != ''  ">schedule_area,</if>
+			<if test="startTime != null  ">startTime,</if>
+			<if test="endTime != null  ">endTime,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateTime != null  ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="shopId != null  ">#{shopId},</if>
+			<if test="shopPositionId != null  ">#{shopPositionId},</if>
+			<if test="charger != null  and charger != ''  ">#{charger},</if>
+			<if test="scheduleName != null  and scheduleName != ''  ">#{scheduleName},</if>
+			<if test="scheduleArea != null  and scheduleArea != ''  ">#{scheduleArea},</if>
+			<if test="startTime != null  ">#{startTime},</if>
+			<if test="endTime != null  ">#{endTime},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateSchedule" parameterType="Schedule">
+        update schedule
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shopId != null  ">shop_id = #{shopId},</if>
+            <if test="shopPositionId != null  ">shop_position_id = #{shopPositionId},</if>
+            <if test="charger != null  and charger != ''  ">charger = #{charger},</if>
+            <if test="scheduleName != null  and scheduleName != ''  ">schedule_name = #{scheduleName},</if>
+            <if test="scheduleArea != null  and scheduleArea != ''  ">schedule_area = #{scheduleArea},</if>
+            <if test="startTime != null  ">startTime = #{startTime},</if>
+            <if test="endTime != null  ">endTime = #{endTime},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+        </trim>
+        where schedule_id = #{scheduleId}
+    </update>
+
+	<delete id="deleteScheduleById" parameterType="Integer">
+        delete from schedule where schedule_id = #{scheduleId}
+    </delete>
+	
+    <delete id="deleteScheduleByIds" parameterType="String">
+        delete from schedule where schedule_id in 
+        <foreach item="scheduleId" collection="array" open="(" separator="," close=")">
+            #{scheduleId}
+        </foreach>
+    </delete>
+
+
+    <select id="selectScheduleByShopIdAndShopPositionId" resultMap="ScheduleResult">
+        select
+        schedule_id, shop_id, shop_position_id, charger, schedule_name, schedule_area, startTime, endTime,
+        create_by, create_time, update_by, update_time , (select shop_name from sys_shop where shop_id = #{shopId})
+        shop_name,(select shop_position_name from shop_position where shop_id = #{shopId} and position_id =
+        #{shopPositionId}) shop_position_name
+        from schedule where shop_id = #{shopId}  and shop_position_id = #{shopPositionId}
+    </select>
+</mapper>

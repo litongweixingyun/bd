@@ -8,6 +8,7 @@ import com.bd.framework.shiro.service.SysPasswordService;
 import com.bd.system.domain.SysUser;
 import com.bd.system.service.ISysUserService;
 import com.bd.system.vo.LoginVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import javax.annotation.Resource;
  * @author luxuewei
  * @since 2019/3/19
  */
+@Slf4j
 @RestController
 @RequestMapping("/mobile/sys")
 public class LoginController extends BaseController {
@@ -32,8 +34,9 @@ public class LoginController extends BaseController {
         if(vo == null) {
             throw new GlobalException("参数异常");
         }
-        String mobile = vo.getMobile();
-        String password = vo.getPassword();
+        log.info("vo="+vo);
+        String mobile = vo.getPhone();
+        String password = vo.getPass();
 
         SysUser user = userService.selectUserByPhoneNumber(mobile);
         if(user == null) {

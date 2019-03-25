@@ -70,6 +70,7 @@ public class SysPasswordService
 
     public boolean matches(SysUser user, String newPassword)
     {
+        String s = encryptPassword(user.getLoginName(), newPassword, user.getSalt());
         return user.getPassword().equals(encryptPassword(user.getLoginName(), newPassword, user.getSalt()));
     }
 
