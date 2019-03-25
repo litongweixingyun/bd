@@ -4,7 +4,7 @@ import com.bd.system.domain.DeptShop;
 import java.util.List;	
 
 /**
- * 部门和店铺关联 数据层
+ * 巡店配置 数据层
  * 
  * @author luxuewei
  * @date 2019-03-25
@@ -12,47 +12,47 @@ import java.util.List;
 public interface DeptShopMapper 
 {
 	/**
-     * 查询部门和店铺关联信息
+     * 查询巡店配置信息
      * 
-     * @param deptId 部门和店铺关联ID
-     * @return 部门和店铺关联信息
+     * @param deptId 巡店配置ID
+     * @return 巡店配置信息
      */
 	public DeptShop selectDeptShopById(Integer deptId);
 	
 	/**
-     * 查询部门和店铺关联列表
+     * 查询巡店配置列表
      * 
-     * @param deptShop 部门和店铺关联信息
-     * @return 部门和店铺关联集合
+     * @param deptShop 巡店配置信息
+     * @return 巡店配置集合
      */
 	public List<DeptShop> selectDeptShopList(DeptShop deptShop);
 	
 	/**
-     * 新增部门和店铺关联
+     * 新增巡店配置
      * 
-     * @param deptShop 部门和店铺关联信息
+     * @param deptShop 巡店配置信息
      * @return 结果
      */
 	public int insertDeptShop(DeptShop deptShop);
 	
 	/**
-     * 修改部门和店铺关联
+     * 修改巡店配置
      * 
-     * @param deptShop 部门和店铺关联信息
+     * @param deptShop 巡店配置信息
      * @return 结果
      */
 	public int updateDeptShop(DeptShop deptShop);
 	
 	/**
-     * 删除部门和店铺关联
+     * 删除巡店配置
      * 
-     * @param deptId 部门和店铺关联ID
+     * @param deptId 巡店配置ID
      * @return 结果
      */
 	public int deleteDeptShopById(Integer deptId);
 	
 	/**
-     * 批量删除部门和店铺关联
+     * 批量删除巡店配置
      * 
      * @param deptIds 需要删除的数据ID
      * @return 结果

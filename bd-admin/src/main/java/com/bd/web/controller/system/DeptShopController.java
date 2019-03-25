@@ -1,7 +1,15 @@
 package com.bd.web.controller.system;
 
 import java.util.List;
+
+import com.bd.common.exception.BusinessException;
+import com.bd.system.domain.Shop;
+import com.bd.system.domain.SysDept;
+import com.bd.system.service.IShopService;
+import com.bd.system.service.ISysDeptService;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,8 +27,10 @@ import com.bd.common.core.page.TableDataInfo;
 import com.bd.common.core.domain.AjaxResult;
 import com.bd.common.utils.poi.ExcelUtil;
 
+import javax.annotation.Resource;
+
 /**
- * 部门和店铺关联 信息操作处理
+ * 巡店配置 信息操作处理
  * 
  * @author luxuewei
  * @date 2019-03-25
@@ -31,8 +41,12 @@ public class DeptShopController extends BaseController
 {
     private String prefix = "system/deptShop";
 	
-	@Autowired
+	@Resource
 	private IDeptShopService deptShopService;
+	@Resource
+	private ISysDeptService deptService;
+	@Resource
+    private IShopService shopService;
 	
 	@RequiresPermissions("system:deptShop:view")
 	@GetMapping()
@@ -42,7 +56,7 @@ public class DeptShopController extends BaseController
 	}
 	
 	/**
-	 * 查询部门和店铺关联列表
+	 * 查询巡店配置列表
 	 */
 	@RequiresPermissions("system:deptShop:list")
 	@PostMapping("/list")
@@ -56,7 +70,7 @@ public class DeptShopController extends BaseController
 	
 	
 	/**
-	 * 导出部门和店铺关联列表
+	 * 导出巡店配置列表
 	 */
 	@RequiresPermissions("system:deptShop:export")
     @PostMapping("/export")
@@ -69,42 +83,54 @@ public class DeptShopController extends BaseController
     }
 	
 	/**
-	 * 新增部门和店铺关联
+	 * 新增巡店配置
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(ModelMap mmap)
 	{
-	    return prefix + "/add";
+        mmap.put("depts", deptService.selectDeptList(new SysDept()));
+        mmap.put("shops", shopService.selectShopList(new Shop()));
+
+        return prefix + "/add";
 	}
 	
 	/**
-	 * 新增保存部门和店铺关联
+	 * 新增保存巡店配置
 	 */
 	@RequiresPermissions("system:deptShop:add")
-	@Log(title = "部门和店铺关联", businessType = BusinessType.INSERT)
+	@Log(title = "巡店配置", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(DeptShop deptShop)
-	{		
-		return toAjax(deptShopService.insertDeptShop(deptShop));
+	{
+        DeptShop info = new DeptShop();
+        BeanUtils.copyProperties(deptShop,info);
+        info.setCheckNum(null);
+        List<DeptShop> deptShops = deptShopService.selectDeptShopList(info);
+        if(CollectionUtils.isNotEmpty(deptShops)){
+            throw new BusinessException("该配置已存在");
+        }
+
+        return toAjax(deptShopService.insertDeptShop(deptShop));
 	}
 
 	/**
-	 * 修改部门和店铺关联
+	 * 修改巡店配置
 	 */
 	@GetMapping("/edit/{deptId}")
 	public String edit(@PathVariable("deptId") Integer deptId, ModelMap mmap)
 	{
 		DeptShop deptShop = deptShopService.selectDeptShopById(deptId);
+
 		mmap.put("deptShop", deptShop);
 	    return prefix + "/edit";
 	}
 	
 	/**
-	 * 修改保存部门和店铺关联
+	 * 修改保存巡店配置
 	 */
 	@RequiresPermissions("system:deptShop:edit")
-	@Log(title = "部门和店铺关联", businessType = BusinessType.UPDATE)
+	@Log(title = "巡店配置", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(DeptShop deptShop)
@@ -113,10 +139,10 @@ public class DeptShopController extends BaseController
 	}
 	
 	/**
-	 * 删除部门和店铺关联
+	 * 删除巡店配置
 	 */
 	@RequiresPermissions("system:deptShop:remove")
-	@Log(title = "部门和店铺关联", businessType = BusinessType.DELETE)
+	@Log(title = "巡店配置", businessType = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)

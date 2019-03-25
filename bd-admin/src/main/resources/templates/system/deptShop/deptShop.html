@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								部门ID：<input type="text" name="deptId"/>
+							</li>
+							<li>
+								店铺ID：<input type="text" name="shopId"/>
+							</li>
+							<li>
+								年月：<input type="text" name="month"/>
+							</li>
+
+							<li>
+								可巡店次数：<input type="text" name="checkNum"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:deptShop:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:deptShop:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:deptShop:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:deptShop:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+	 <script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
+	 <script th:src="@{/ajax/libs/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:deptShop:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:deptShop:remove')}]];
+        var prefix = ctx + "system/deptShop";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "巡店配置",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'deptId', 
+					title : '部门ID',
+                    sortable: true
+				},
+                    {
+                        field : 'deptName',
+                        title : '部门名称'
+                    },
+				{
+					field : 'shopId', 
+					title : '店铺ID',
+					sortable: true
+				},
+                    {
+                        field : 'shopName',
+                        title : '店铺名称'
+                    },
+				{
+					field : 'month', 
+					title : '年月',
+					sortable: true
+				},
+				{
+					field : 'checkNum', 
+					title : '可巡店次数',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.deptId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.deptId + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

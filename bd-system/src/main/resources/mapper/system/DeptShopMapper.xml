@@ -7,27 +7,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="DeptShop" id="DeptShopResult">
         <result property="deptId"    column="dept_id"    />
         <result property="shopId"    column="shop_id"    />
-        <result property="maxNum"    column="max_num"    />
+        <result property="month"    column="month"    />
         <result property="checkNum"    column="check_num"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="shopName"    column="shop_name"    />
     </resultMap>
 	
 	<sql id="selectDeptShopVo">
-        select dept_id, shop_id, max_num, check_num from sys_dept_shop
+        select dept_id, shop_id, month, check_num from sys_dept_shop
     </sql>
 	
     <select id="selectDeptShopList" parameterType="DeptShop" resultMap="DeptShopResult">
-        <include refid="selectDeptShopVo"/>
+        select ds.dept_id, ds.shop_id, ds.month, ds.check_num , (select dept_name from sys_dept where dept_id =
+        ds.dept_id) dept_name, (select shop_name from sys_shop where shop_id =
+        ds.shop_id) shop_name
+        from sys_dept_shop ds
         <where>  
             <if test="deptId != null "> and dept_id = #{deptId}</if>
              <if test="shopId != null "> and shop_id = #{shopId}</if>
-             <if test="maxNum != null "> and max_num = #{maxNum}</if>
+             <if test="month != null  and month != '' "> and month = #{month}</if>
              <if test="checkNum != null "> and check_num = #{checkNum}</if>
          </where>
     </select>
     
     <select id="selectDeptShopById" parameterType="Integer" resultMap="DeptShopResult">
-        <include refid="selectDeptShopVo"/>
-        where dept_id = #{deptId}
+        select ds.dept_id, ds.shop_id, ds.month, ds.check_num , (select dept_name from sys_dept where dept_id =
+        ds.dept_id) dept_name, (select shop_name from sys_shop where shop_id =
+        ds.shop_id) shop_name
+        from sys_dept_shop ds
+        where ds.dept_id = #{deptId}
     </select>
         
     <insert id="insertDeptShop" parameterType="DeptShop">
@@ -35,13 +43,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="deptId != null  ">dept_id,</if>
 			<if test="shopId != null  ">shop_id,</if>
-			<if test="maxNum != null  ">max_num,</if>
+			<if test="month != null  and month != ''  ">month,</if>
 			<if test="checkNum != null  ">check_num,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="deptId != null  ">#{deptId},</if>
 			<if test="shopId != null  ">#{shopId},</if>
-			<if test="maxNum != null  ">#{maxNum},</if>
+			<if test="month != null  and month != ''  ">#{month},</if>
 			<if test="checkNum != null  ">#{checkNum},</if>
          </trim>
     </insert>
@@ -50,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update sys_dept_shop
         <trim prefix="SET" suffixOverrides=",">
             <if test="shopId != null  ">shop_id = #{shopId},</if>
-            <if test="maxNum != null  ">max_num = #{maxNum},</if>
+            <if test="month != null  and month != ''  ">month = #{month},</if>
             <if test="checkNum != null  ">check_num = #{checkNum},</if>
         </trim>
         where dept_id = #{deptId}
