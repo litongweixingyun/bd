@@ -1,6 +1,7 @@
 package com.bd.system.mapper;
 
 import com.bd.system.domain.SysNotice;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -51,5 +52,5 @@ public interface SysNoticeMapper
      */
     public int deleteNoticeByIds(String[] noticeIds);
 
-    SysNotice selectNoticeByTypeAndMonth(int noticeType);
+    SysNotice selectNoticeByTypeAndMonth(@Param("noticeType") int noticeType);
 }
