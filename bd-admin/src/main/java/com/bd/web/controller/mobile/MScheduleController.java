@@ -40,7 +40,8 @@ public class MScheduleController extends BaseController
 
 	@GetMapping("/getSchedule/{shopId}/{shopPositionId}")
 	public Schedule getSchedule(@PathVariable("shopId") Long shopId,@PathVariable("shopPositionId") Long shopPositionId){
-		return scheduleService.selectScheduleByShopIdAndShopPositionId(shopId,shopPositionId);
+		//return scheduleService.selectScheduleByShopIdAndShopPositionId(shopId,shopPositionId);
+		return null ;
 	}
 
 }

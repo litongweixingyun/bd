@@ -9,10 +9,10 @@ import com.bd.system.service.IScheduleService;
 import com.bd.common.core.text.Convert;
 
 /**
- * 排班 服务层实现
+ * 店内排班 服务层实现
  * 
  * @author luxuewei
- * @date 2019-03-25
+ * @date 2019-03-26
  */
 @Service
 public class ScheduleServiceImpl implements IScheduleService 
@@ -21,10 +21,10 @@ public class ScheduleServiceImpl implements IScheduleService
 	private ScheduleMapper scheduleMapper;
 
 	/**
-     * 查询排班信息
+     * 查询店内排班信息
      * 
-     * @param scheduleId 排班ID
-     * @return 排班信息
+     * @param scheduleId 店内排班ID
+     * @return 店内排班信息
      */
     @Override
 	public Schedule selectScheduleById(Integer scheduleId)
@@ -33,10 +33,10 @@ public class ScheduleServiceImpl implements IScheduleService
 	}
 	
 	/**
-     * 查询排班列表
+     * 查询店内排班列表
      * 
-     * @param schedule 排班信息
-     * @return 排班集合
+     * @param schedule 店内排班信息
+     * @return 店内排班集合
      */
 	@Override
 	public List<Schedule> selectScheduleList(Schedule schedule)
@@ -45,9 +45,9 @@ public class ScheduleServiceImpl implements IScheduleService
 	}
 	
     /**
-     * 新增排班
+     * 新增店内排班
      * 
-     * @param schedule 排班信息
+     * @param schedule 店内排班信息
      * @return 结果
      */
 	@Override
@@ -57,9 +57,9 @@ public class ScheduleServiceImpl implements IScheduleService
 	}
 	
 	/**
-     * 修改排班
+     * 修改店内排班
      * 
-     * @param schedule 排班信息
+     * @param schedule 店内排班信息
      * @return 结果
      */
 	@Override
@@ -69,7 +69,7 @@ public class ScheduleServiceImpl implements IScheduleService
 	}
 
 	/**
-     * 删除排班对象
+     * 删除店内排班对象
      * 
      * @param ids 需要删除的数据ID
      * @return 结果
@@ -79,10 +79,5 @@ public class ScheduleServiceImpl implements IScheduleService
 	{
 		return scheduleMapper.deleteScheduleByIds(Convert.toStrArray(ids));
 	}
-
-	@Override
-	public Schedule selectScheduleByShopIdAndShopPositionId(Long shopId, Long shopPositionId) {
-		return scheduleMapper.selectScheduleByShopIdAndShopPositionId(shopId,shopPositionId);
-	}
-
+	
 }

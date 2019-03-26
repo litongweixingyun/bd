@@ -11,47 +11,27 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								：<input type="text" name="shopId"/>
+								店铺ID：<input type="text" name="shopId"/>
 							</li>
 
 							<li>
-								：<input type="text" name="shopPositionId"/>
+								岗位ID：<input type="text" name="positionId"/>
 							</li>
 
 							<li>
-								：<input type="text" name="charger"/>
+								用户ID：<input type="text" name="userId"/>
 							</li>
 
 							<li>
-								：<input type="text" name="scheduleName"/>
+								负责区域：<input type="text" name="scheduleArea"/>
 							</li>
 
 							<li>
-								：<input type="text" name="scheduleArea"/>
+								开始时间：<input type="text" name="startTime"/>
 							</li>
 
 							<li>
-								：<input type="text" name="startTime"/>
-							</li>
-
-							<li>
-								：<input type="text" name="endTime"/>
-							</li>
-
-							<li>
-								：<input type="text" name="createBy"/>
-							</li>
-
-							<li>
-								：<input type="text" name="createTime"/>
-							</li>
-
-							<li>
-								：<input type="text" name="updateBy"/>
-							</li>
-
-							<li>
-								：<input type="text" name="updateTime"/>
+								结束时间：<input type="text" name="endTime"/>
 							</li>
 
 							<li>
@@ -86,6 +66,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:schedule:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:schedule:remove')}]];
+        var datas = [[${@dict.getType('sys_shop_area')}]];
         var prefix = ctx + "system/schedule";
 
         $(function() {
@@ -95,7 +76,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "排班",
+                modalName: "店内排班",
 		        showExport: true,
                 columns: [{
 		            checkbox: true
@@ -107,57 +88,46 @@
 				},
 				{
 					field : 'shopId', 
-					title : '',
+					title : '店铺ID',
 					sortable: true
 				},
+                    {
+                        field : 'shopName',
+                        title : '店铺名称'
+                    },
 				{
-					field : 'shopPositionId', 
-					title : '',
+					field : 'positionId', 
+					title : '岗位ID',
 					sortable: true
 				},
+                    {
+                        field : 'positionName',
+                        title : '岗位名称'
+                    },
 				{
-					field : 'charger', 
-					title : '',
+					field : 'userId', 
+					title : '用户ID',
 					sortable: true
 				},
-				{
-					field : 'scheduleName', 
-					title : '',
-					sortable: true
-				},
+                    {
+                        field : 'userName',
+                        title : '用户姓名'
+                    },
 				{
 					field : 'scheduleArea', 
-					title : '',
-					sortable: true
+					title : '负责区域',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(datas, row.scheduleArea);
+                    }
 				},
 				{
 					field : 'startTime', 
-					title : '',
+					title : '开始时间',
 					sortable: true
 				},
 				{
 					field : 'endTime', 
-					title : '',
-					sortable: true
-				},
-				{
-					field : 'createBy', 
-					title : '',
-					sortable: true
-				},
-				{
-					field : 'createTime', 
-					title : '',
-					sortable: true
-				},
-				{
-					field : 'updateBy', 
-					title : '',
-					sortable: true
-				},
-				{
-					field : 'updateTime', 
-					title : '',
+					title : '结束时间',
 					sortable: true
 				},
 		        {
