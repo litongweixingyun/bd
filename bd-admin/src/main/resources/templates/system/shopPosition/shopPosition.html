@@ -11,31 +11,11 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								：<input type="text" name="positionId"/>
+								店铺ID：<input type="text" name="shopId"/>
 							</li>
 
 							<li>
-								：<input type="text" name="shopPositionName"/>
-							</li>
-
-							<li>
-								：<input type="text" name="sort"/>
-							</li>
-
-							<li>
-								：<input type="text" name="createBy"/>
-							</li>
-
-							<li>
-								：<input type="text" name="createTime"/>
-							</li>
-
-							<li>
-								：<input type="text" name="updateBy"/>
-							</li>
-
-							<li>
-								：<input type="text" name="updateTime"/>
+								岗位名称：<input type="text" name="positionName"/>
 							</li>
 
 							<li>
@@ -79,49 +59,29 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "店铺岗位关系",
+                modalName: "店铺岗位",
 		        showExport: true,
                 columns: [{
 		            checkbox: true
 		        },
 				{
-					field : 'shopId', 
-					title : '',
+					field : 'positionId', 
+					title : '岗位ID',
 					visible: false
 				},
 				{
-					field : 'positionId', 
-					title : '',
+					field : 'shopId', 
+					title : '店铺ID',
 					sortable: true
 				},
+                    {
+                        field : 'shopName',
+                        title : '店铺名称',
+                        sortable: true
+                    },
 				{
-					field : 'shopPositionName', 
-					title : '',
-					sortable: true
-				},
-				{
-					field : 'sort', 
-					title : '',
-					sortable: true
-				},
-				{
-					field : 'createBy', 
-					title : '',
-					sortable: true
-				},
-				{
-					field : 'createTime', 
-					title : '',
-					sortable: true
-				},
-				{
-					field : 'updateBy', 
-					title : '',
-					sortable: true
-				},
-				{
-					field : 'updateTime', 
-					title : '',
+					field : 'positionName', 
+					title : '岗位名称',
 					sortable: true
 				},
 		        {
@@ -129,8 +89,8 @@
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.shopId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.shopId + '\')"><i class="fa fa-remove"></i>删除</a>');
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.positionId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.positionId + '\')"><i class="fa fa-remove"></i>删除</a>');
 						return actions.join('');
 		            }
 		        }]

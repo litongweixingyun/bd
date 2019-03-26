@@ -23,7 +23,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/mobile/shop/position")
-public class ShopPositionController extends BaseController {
+public class MShopPositionController extends BaseController {
 
     @Resource
     private IShopPositionService shopPositionService ;

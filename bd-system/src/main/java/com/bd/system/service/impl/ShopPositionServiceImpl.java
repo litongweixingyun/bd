@@ -9,10 +9,10 @@ import com.bd.system.service.IShopPositionService;
 import com.bd.common.core.text.Convert;
 
 /**
- * 店铺岗位关系 服务层实现
+ * 店铺岗位 服务层实现
  * 
  * @author luxuewei
- * @date 2019-03-25
+ * @date 2019-03-26
  */
 @Service
 public class ShopPositionServiceImpl implements IShopPositionService 
@@ -21,22 +21,22 @@ public class ShopPositionServiceImpl implements IShopPositionService
 	private ShopPositionMapper shopPositionMapper;
 
 	/**
-     * 查询店铺岗位关系信息
+     * 查询店铺岗位信息
      * 
-     * @param shopId 店铺岗位关系ID
-     * @return 店铺岗位关系信息
+     * @param positionId 店铺岗位ID
+     * @return 店铺岗位信息
      */
     @Override
-	public ShopPosition selectShopPositionById(Integer shopId)
+	public ShopPosition selectShopPositionById(Integer positionId)
 	{
-	    return shopPositionMapper.selectShopPositionById(shopId);
+	    return shopPositionMapper.selectShopPositionById(positionId);
 	}
 	
 	/**
-     * 查询店铺岗位关系列表
+     * 查询店铺岗位列表
      * 
-     * @param shopPosition 店铺岗位关系信息
-     * @return 店铺岗位关系集合
+     * @param shopPosition 店铺岗位信息
+     * @return 店铺岗位集合
      */
 	@Override
 	public List<ShopPosition> selectShopPositionList(ShopPosition shopPosition)
@@ -45,9 +45,9 @@ public class ShopPositionServiceImpl implements IShopPositionService
 	}
 	
     /**
-     * 新增店铺岗位关系
+     * 新增店铺岗位
      * 
-     * @param shopPosition 店铺岗位关系信息
+     * @param shopPosition 店铺岗位信息
      * @return 结果
      */
 	@Override
@@ -57,9 +57,9 @@ public class ShopPositionServiceImpl implements IShopPositionService
 	}
 	
 	/**
-     * 修改店铺岗位关系
+     * 修改店铺岗位
      * 
-     * @param shopPosition 店铺岗位关系信息
+     * @param shopPosition 店铺岗位信息
      * @return 结果
      */
 	@Override
@@ -69,7 +69,7 @@ public class ShopPositionServiceImpl implements IShopPositionService
 	}
 
 	/**
-     * 删除店铺岗位关系对象
+     * 删除店铺岗位对象
      * 
      * @param ids 需要删除的数据ID
      * @return 结果
