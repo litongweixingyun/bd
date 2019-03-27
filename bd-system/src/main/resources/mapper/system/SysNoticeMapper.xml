@@ -82,7 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
-    <select id="selectNoticeByTypeAndMonth" parameterType="Long" resultMap="SysNoticeResult">
+    <select id="selectNoticeByTypeAndMonth" parameterType="int" resultMap="SysNoticeResult">
         <include refid="selectNoticeVo"/>
         where notice_type = #{noticeType}
         order by create_time desc limit 1

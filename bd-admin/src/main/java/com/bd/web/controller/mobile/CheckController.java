@@ -2,6 +2,7 @@ package com.bd.web.controller.mobile;
 
 import com.bd.common.core.controller.BaseController;
 import com.bd.common.core.domain.AjaxResult;
+import com.bd.common.exception.BusinessException;
 import com.bd.system.domain.CheckRecord;
 import com.bd.system.domain.DeptShop;
 import com.bd.system.service.ICheckRecordService;
@@ -30,7 +31,10 @@ public class CheckController extends BaseController {
 
     @GetMapping("/index")
     public CheckRecord index(){
-        List<CheckRecord> checkRecords = checkRecordService.selectCheckRecordList(null);
+        List<CheckRecord> checkRecords = checkRecordService.selectCheckRecordList(new  CheckRecord());
+        if(CollectionUtils.isEmpty(checkRecords)){
+            throw new BusinessException("暂无检查记录");
+        }
         return checkRecords.get(0);
     }
 
