@@ -3,6 +3,7 @@ package com.bd.system.domain;
 import com.bd.common.annotation.Excel;
 import com.bd.common.annotation.Excel.Type;
 import com.bd.common.core.domain.BaseEntity;
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * 
  * @author luxuewei
  */
+@Data
 public class SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -64,6 +66,36 @@ public class SysUser extends BaseEntity
 
     /** 删除标志（0代表存在 2代表删除） */
     private String delFlag;
+    /**
+     * 身份证号
+     */
+    private String idCard;
+    /**
+     * 年龄
+     */
+    private Integer age;
+    /**
+     * 家庭地址
+     */
+    private String homeAddress ;
+    /**
+     * 生日
+     */
+    private String birth;
+    /**
+     * 紧急联系人
+     */
+    private String contactInfo;
+    /**
+     * 岗位名称
+     */
+    private String positionName;
+
+
+    private Integer shop_id;
+    private String shopName;
+
+    private String jobNo;
 
     /** 最后登陆IP */
     @Excel(name = "最后登陆IP", type = Type.EXPORT)

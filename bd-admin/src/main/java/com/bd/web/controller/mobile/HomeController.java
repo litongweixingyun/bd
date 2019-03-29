@@ -3,6 +3,7 @@ package com.bd.web.controller.mobile;
 import com.bd.common.core.controller.BaseController;
 import com.bd.system.domain.SysNotice;
 import com.bd.system.domain.SysUser;
+import com.bd.system.service.IShopPositionService;
 import com.bd.system.service.ISysNoticeService;
 import com.bd.system.service.ISysUserService;
 import com.google.common.collect.Lists;
