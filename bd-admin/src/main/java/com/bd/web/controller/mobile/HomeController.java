@@ -1,18 +1,21 @@
 package com.bd.web.controller.mobile;
 
 import com.bd.common.core.controller.BaseController;
+import com.bd.common.core.domain.AjaxResult;
+import com.bd.common.exception.GlobalException;
+import com.bd.common.utils.UUIDUtil;
+import com.bd.framework.shiro.service.SysPasswordService;
 import com.bd.system.domain.SysNotice;
 import com.bd.system.domain.SysUser;
 import com.bd.system.service.IShopPositionService;
 import com.bd.system.service.ISysNoticeService;
 import com.bd.system.service.ISysUserService;
+import com.bd.system.vo.LoginVO;
 import com.google.common.collect.Lists;
 import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.shiro.authc.credential.PasswordService;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -29,6 +32,8 @@ public class HomeController extends BaseController {
     private ISysNoticeService noticeService;
     @Resource
     private ISysUserService userService;
+    @Resource
+    private SysPasswordService passwordService;
 
     /**
      * 本月主题公告
@@ -49,4 +54,24 @@ public class HomeController extends BaseController {
         SysUser user = userService.selectUserById(userId);
         return user ;
     }
+
+    @PostMapping("/myinfos")
+    public SysUser login(LoginVO vo){
+        if(vo == null) {
+            throw new GlobalException("参数异常");
+        }
+        log.info("vo="+vo);
+        String mobile = vo.getPhone();
+        String password = vo.getPass();
+
+        SysUser user = userService.selectUserByPhoneNumber(mobile);
+        if(user == null) {
+            throw new GlobalException("手机号不存在");
+        }
+        passwordService.validate(user, password);
+
+        return user ;
+    }
+
+
 }
