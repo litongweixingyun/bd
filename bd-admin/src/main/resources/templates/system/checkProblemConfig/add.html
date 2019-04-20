@@ -18,7 +18,7 @@
 				<label class="col-sm-3 control-label">条目名称：</label>
 
 				<div class="col-sm-8">
-						<select id="itemName" name="itemName"
+						<select id="itemId" name="itemId"
 								class="form-control">
 						</select>
 				</div>
@@ -39,7 +39,7 @@
 				<label class="col-sm-3 control-label">条目小项：</label>
 				<div class="col-sm-8">
 					<div class="input-group" style="width: 100%">
-						<select name="subItemName" class="form-control m-b" th:with="type=${@dict.getType('check_config_item_detail')}">
+						<select name="subItemId" class="form-control m-b" th:with="type=${@dict.getType('check_config_subItem')}">
 							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 						</select>
 					</div>
@@ -83,37 +83,32 @@
 			if(deptId ==''){
 				return;
 			}
-			$("#itemName").empty();
-			$("#percent").empty();
-			$("#raction").empty();
+
 			$.ajax({
 				url:'/system/checkConfig/itemlist/'+deptId,
 				async:false,
 				type:'get',
 
 				success:function(data){
-					var t2 = $("#itemName").empty();
+					var t2 = $("#itemId").empty();
 
 					for ( var i = 0; i < data.length; i++) {
-						t2.append("<option value='"+data[i].itemName+"'>"+ data[i].itemName+"</option>");
+						t2.append("<option value='"+data[i].itemId+"'>"+ data[i].itemName+"</option>");
 					}
 				}
 			})
 		});
 
-		$("#itemName").change(function(){
+		$("#itemId").change(function(){
 			var deptId = $("#deptId").val();
 
-			var itemName = $("#itemName").val();
-			if(deptId =='' || itemName ==''){
+			var itemId = $("#itemId").val();
+			if(deptId =='' || itemId ==''){
 				return;
 			}
-			$("#itemName").val();
-			$("#percent").val();
-			$("#raction").val();
 
 			$.ajax({
-				url:'/system/checkConfig/itemlist/'+deptId +'/'+itemName,
+				url:'/system/checkConfig/itemlist/'+deptId +'/'+itemId,
 				async:false,
 				type:'get',
 				success:function(data){

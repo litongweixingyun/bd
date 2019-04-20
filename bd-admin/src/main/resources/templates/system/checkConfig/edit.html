@@ -22,8 +22,8 @@
 
 				<div class="col-sm-8">
 					<div class="input-group" style="width: 100%">
-						<select name="itemName" class="form-control m-b" th:with="type=${@dict.getType('sys_check_config_item')}">
-							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictLabel}" th:field="*{itemName}"></option>
+						<select name="itemId" class="form-control m-b" th:with="type=${@dict.getType('check_config_item')}">
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{itemId}"></option>
 						</select>
 					</div>
 				</div>

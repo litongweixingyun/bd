@@ -21,7 +21,7 @@
 
 
 				<div class="col-sm-8">
-					<select th:id="itemName" th:name="itemName" class="form-control">
+					<select th:id="itemId" th:name="itemId" class="form-control">
 					</select>
 				</div>
 			</div>
@@ -42,8 +42,8 @@
 
 				<div class="col-sm-8">
 					<div class="input-group" style="width: 100%">
-						<select name="subItemName" class="form-control m-b" th:with="type=${@dict.getType('check_config_item_detail')}">
-							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{itemName}"></option>
+						<select name="subItemId" class="form-control m-b" th:with="type=${@dict.getType('check_config_subItem')}">
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{subItemId}"></option>
 						</select>
 					</div>
 				</div>
@@ -84,9 +84,6 @@
 			if(deptId ==''){
 				return;
 			}
-			$("#itemName").val();
-			$("#percent").val();
-			$("#raction").val();
 
 			$.ajax({
 				url:'/system/checkConfig/itemlist/'+deptId,
@@ -94,27 +91,25 @@
 				type:'get',
 
 				success:function(data){
-					var t2 = $("#itemName").empty();
+					var t2 = $("#itemId").empty();
 
 					for ( var i = 0; i < data.length; i++) {
-						t2.append("<option value='"+data[i].itemName+"'>"+ data[i].itemName+"</option>");
+						t2.append("<option value='"+data[i].itemId+"'>"+ data[i].itemName+"</option>");
 					}
 				}
 			})
 		});
 
-		$("#itemName").change(function(){
+		$("#itemId").change(function(){
 			var deptId = $("#deptId").val();
 
-			var itemName = $("#itemName").val();
-			if(deptId =='' || itemName ==''){
+			var itemId = $("#itemId").val();
+			if(deptId =='' || itemId ==''){
 				return;
 			}
-			$("#itemName").val();
-			$("#percent").val();
-			$("#raction").val();
+
 			$.ajax({
-				url:'/system/checkConfig/itemlist/'+deptId +'/'+itemName,
+				url:'/system/checkConfig/itemlist/'+deptId +'/'+itemId,
 				async:false,
 				type:'get',
 				success:function(data){

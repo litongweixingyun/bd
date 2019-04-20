@@ -21,7 +21,7 @@ public class CheckConfig extends BaseEntity
 	/** 部门id */
 	private Integer deptId;
 	/** 条目名称 */
-	private String itemName;
+	private Integer itemId;
 	/** 占比 */
 	private Integer percent;
 	/** 每项扣分 */
@@ -29,6 +29,8 @@ public class CheckConfig extends BaseEntity
 
 
 	private String deptName;
+
+	private String itemName;
 
 
 

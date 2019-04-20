@@ -8,15 +8,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="checkConfigId"    column="check_config_id"    />
         <result property="deptId"    column="dept_id"    />
         <result property="deptName"    column="dept_name"    />
+        <result property="itemId"    column="item_id"    />
         <result property="itemName"    column="item_name"    />
         <result property="percent"    column="percent"    />
         <result property="raction"    column="raction"    />
     </resultMap>
 	
 	<sql id="selectCheckConfigVo">
-        select cc.check_config_id, cc.dept_id, cc.item_name, cc.percent, cc.raction,d.dept_name
+        select cc.check_config_id, cc.dept_id, cc.item_id, cc.percent, cc.raction
+        ,d.dept_name,sdd.dict_label item_name
         from check_config cc
         left join sys_dept d on d.dept_id = cc.dept_id
+        left join sys_dict_data sdd on sdd.dict_value = cc.item_id and sdd.dict_type = 'check_config_item'
+
     </sql>
 	
     <select id="selectCheckConfigList" parameterType="CheckConfig" resultMap="CheckConfigResult">
@@ -24,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="checkConfigId != null "> and cc.check_config_id = #{checkConfigId}</if>
              <if test="deptId != null "> and cc.dept_id = #{deptId}</if>
-             <if test="itemName != null  and itemName != '' "> and cc.item_name = #{itemName}</if>
+             <if test="itemId != null  and itemId != '' "> and cc.item_id = #{itemId}</if>
              <if test="percent != null "> and cc.percent = #{percent}</if>
              <if test="raction != null "> and cc.raction = #{raction}</if>
          </where>
@@ -39,13 +43,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into check_config
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="deptId != null  ">dept_id,</if>
-			<if test="itemName != null  and itemName != ''  ">item_name,</if>
+			<if test="itemId != null  and itemId != ''  ">item_id,</if>
 			<if test="percent != null  ">percent,</if>
 			<if test="raction != null  ">raction,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="deptId != null  ">#{deptId},</if>
-			<if test="itemName != null  and itemName != ''  ">#{itemName},</if>
+			<if test="itemId != null  and itemId != ''  ">#{itemId},</if>
 			<if test="percent != null  ">#{percent},</if>
 			<if test="raction != null  ">#{raction},</if>
          </trim>
@@ -55,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update check_config
         <trim prefix="SET" suffixOverrides=",">
             <if test="deptId != null  ">dept_id = #{deptId},</if>
-            <if test="itemName != null  and itemName != ''  ">item_name = #{itemName},</if>
+            <if test="itemId != null  and itemId != ''  ">item_id = #{itemId},</if>
             <if test="percent != null  ">percent = #{percent},</if>
             <if test="raction != null  ">raction = #{raction},</if>
         </trim>

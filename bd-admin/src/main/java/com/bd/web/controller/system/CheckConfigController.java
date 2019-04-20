@@ -148,13 +148,13 @@ public class CheckConfigController extends BaseController
 		return checkConfigService.selectCheckConfigList(checkConfig);
 	}
 
-	@GetMapping("/itemlist/{deptId}/{itemName}")
+	@GetMapping("/itemlist/{deptId}/{itemId}")
 	@ResponseBody
-	public CheckConfig itemlist(@PathVariable("deptId") Integer deptId,@PathVariable("itemName") String itemName)
+	public CheckConfig itemlist(@PathVariable("deptId") Integer deptId,@PathVariable("itemId") Integer itemId)
 	{
 		CheckConfig checkConfig =  new CheckConfig();
 		checkConfig.setDeptId(deptId);
-		checkConfig.setItemName(itemName);
+		checkConfig.setItemId(itemId);
 		List<CheckConfig> checkConfigs = checkConfigService.selectCheckConfigList(checkConfig);
 		if(CollectionUtils.isNotEmpty(checkConfigs)){
 			return checkConfigs.get(0);

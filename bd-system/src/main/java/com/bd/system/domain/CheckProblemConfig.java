@@ -21,12 +21,14 @@ public class CheckProblemConfig extends BaseEntity
 	/** 部门id */
 	private Integer deptId;
 	/** 条目名称 */
+	private String itemId;
 	private String itemName;
 	/** 占比 */
 	private Integer percent;
 	/** 每项扣分 */
 	private Integer raction;
 	/** 条目小项 */
+	private String subItemId;
 	private String subItemName;
 	/** 问题ID */
 	private Integer problemId;
@@ -34,5 +36,4 @@ public class CheckProblemConfig extends BaseEntity
 
 	private String deptName;
 	private String problemName;
-	private String dictLabel;
 }
