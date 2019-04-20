@@ -39,7 +39,7 @@ public class SysMenuController extends BaseController
     }
 
     @RequiresPermissions("system:menu:list")
-    @GetMapping("/list")
+    @PostMapping("/list")
     @ResponseBody
     public List<SysMenu> list(SysMenu menu)
     {

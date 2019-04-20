@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bd.system.mapper.CheckProblemMapper">
+    
+    <resultMap type="CheckProblem" id="CheckProblemResult">
+        <result property="problemId"    column="problem_id"    />
+        <result property="problemName"    column="problem_name"    />
+    </resultMap>
+	
+	<sql id="selectCheckProblemVo">
+        select problem_id, problem_name from check_problem
+    </sql>
+	
+    <select id="selectCheckProblemList" parameterType="CheckProblem" resultMap="CheckProblemResult">
+        <include refid="selectCheckProblemVo"/>
+        <where>  
+            <if test="problemId != null "> and problem_id = #{problemId}</if>
+             <if test="problemName != null  and problemName != '' "> and problem_name = #{problemName}</if>
+         </where>
+    </select>
+    
+    <select id="selectCheckProblemById" parameterType="Integer" resultMap="CheckProblemResult">
+        <include refid="selectCheckProblemVo"/>
+        where problem_id = #{problemId}
+    </select>
+        
+    <insert id="insertCheckProblem" parameterType="CheckProblem" useGeneratedKeys="true" keyProperty="problemId">
+        insert into check_problem
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="problemName != null  and problemName != ''  ">problem_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="problemName != null  and problemName != ''  ">#{problemName},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCheckProblem" parameterType="CheckProblem">
+        update check_problem
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="problemName != null  and problemName != ''  ">problem_name = #{problemName},</if>
+        </trim>
+        where problem_id = #{problemId}
+    </update>
+
+	<delete id="deleteCheckProblemById" parameterType="Integer">
+        delete from check_problem where problem_id = #{problemId}
+    </delete>
+	
+    <delete id="deleteCheckProblemByIds" parameterType="String">
+        delete from check_problem where problem_id in 
+        <foreach item="problemId" collection="array" open="(" separator="," close=")">
+            #{problemId}
+        </foreach>
+    </delete>
+    
+</mapper>

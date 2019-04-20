@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bd.system.mapper.CheckConfigMapper">
+    
+    <resultMap type="CheckConfig" id="CheckConfigResult">
+        <result property="checkConfigId"    column="check_config_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="percent"    column="percent"    />
+        <result property="raction"    column="raction"    />
+    </resultMap>
+	
+	<sql id="selectCheckConfigVo">
+        select cc.check_config_id, cc.dept_id, cc.item_name, cc.percent, cc.raction,d.dept_name
+        from check_config cc
+        left join sys_dept d on d.dept_id = cc.dept_id
+    </sql>
+	
+    <select id="selectCheckConfigList" parameterType="CheckConfig" resultMap="CheckConfigResult">
+        <include refid="selectCheckConfigVo"/>
+        <where>  
+            <if test="checkConfigId != null "> and cc.check_config_id = #{checkConfigId}</if>
+             <if test="deptId != null "> and cc.dept_id = #{deptId}</if>
+             <if test="itemName != null  and itemName != '' "> and cc.item_name = #{itemName}</if>
+             <if test="percent != null "> and cc.percent = #{percent}</if>
+             <if test="raction != null "> and cc.raction = #{raction}</if>
+         </where>
+    </select>
+    
+    <select id="selectCheckConfigById" parameterType="Integer" resultMap="CheckConfigResult">
+        <include refid="selectCheckConfigVo"/>
+        where check_config_id = #{checkConfigId}
+    </select>
+        
+    <insert id="insertCheckConfig" parameterType="CheckConfig" useGeneratedKeys="true" keyProperty="checkConfigId">
+        insert into check_config
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="deptId != null  ">dept_id,</if>
+			<if test="itemName != null  and itemName != ''  ">item_name,</if>
+			<if test="percent != null  ">percent,</if>
+			<if test="raction != null  ">raction,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="deptId != null  ">#{deptId},</if>
+			<if test="itemName != null  and itemName != ''  ">#{itemName},</if>
+			<if test="percent != null  ">#{percent},</if>
+			<if test="raction != null  ">#{raction},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCheckConfig" parameterType="CheckConfig">
+        update check_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deptId != null  ">dept_id = #{deptId},</if>
+            <if test="itemName != null  and itemName != ''  ">item_name = #{itemName},</if>
+            <if test="percent != null  ">percent = #{percent},</if>
+            <if test="raction != null  ">raction = #{raction},</if>
+        </trim>
+        where check_config_id = #{checkConfigId}
+    </update>
+
+	<delete id="deleteCheckConfigById" parameterType="Integer">
+        delete from check_config where check_config_id = #{checkConfigId}
+    </delete>
+	
+    <delete id="deleteCheckConfigByIds" parameterType="String">
+        delete from check_config where check_config_id in 
+        <foreach item="checkConfigId" collection="array" open="(" separator="," close=")">
+            #{checkConfigId}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bd.system.mapper.ProblemMapper">
+    
+    <resultMap type="Problem" id="ProblemResult">
+        <result property="problemId"    column="problem_id"    />
+        <result property="problemName"    column="problem_name"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+	
+	<sql id="selectProblemVo">
+        select problem_id, problem_name, remark from sys_problem
+    </sql>
+	
+    <select id="selectProblemList" parameterType="Problem" resultMap="ProblemResult">
+        <include refid="selectProblemVo"/>
+        <where>  
+            <if test="problemId != null "> and problem_id = #{problemId}</if>
+             <if test="problemName != null  and problemName != '' "> and problem_name = #{problemName}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+         </where>
+    </select>
+    
+    <select id="selectProblemById" parameterType="Integer" resultMap="ProblemResult">
+        <include refid="selectProblemVo"/>
+        where problem_id = #{problemId}
+    </select>
+        
+    <insert id="insertProblem" parameterType="Problem" useGeneratedKeys="true" keyProperty="problemId">
+        insert into sys_problem
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="problemName != null  and problemName != ''  ">problem_name,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="problemName != null  and problemName != ''  ">#{problemName},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateProblem" parameterType="Problem">
+        update sys_problem
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="problemName != null  and problemName != ''  ">problem_name = #{problemName},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+        </trim>
+        where problem_id = #{problemId}
+    </update>
+
+	<delete id="deleteProblemById" parameterType="Integer">
+        delete from sys_problem where problem_id = #{problemId}
+    </delete>
+	
+    <delete id="deleteProblemByIds" parameterType="String">
+        delete from sys_problem where problem_id in 
+        <foreach item="problemId" collection="array" open="(" separator="," close=")">
+            #{problemId}
+        </foreach>
+    </delete>
+    
+</mapper>

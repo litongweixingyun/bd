@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bd.system.mapper.CheckProblemConfigMapper">
+    
+    <resultMap type="CheckProblemConfig" id="CheckProblemConfigResult">
+        <result property="problemConfigId"    column="problem_config_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="percent"    column="percent"    />
+        <result property="raction"    column="raction"    />
+        <result property="subItemName"    column="sub_item_name"    />
+        <result property="problemId"    column="problem_id"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="problemName"    column="problem_name"    />
+        <result property="dictLabel"    column="dict_label"    />
+    </resultMap>
+	
+	<sql id="selectCheckProblemConfigVo">
+        select cpc.problem_config_id, cpc.dept_id, cpc.item_name, cpc.percent, cpc.raction, cpc.sub_item_name, cpc.problem_id,
+        d.dept_name,cp.problem_name,sdd.dict_label
+        from check_problem_config cpc
+        left join sys_dept d on d.dept_id = cpc.dept_id
+        left join check_problem cp on cp.problem_id = cpc.problem_id
+        left join sys_dict_data sdd on sdd.dict_value = cpc.sub_item_name and sdd.dict_type = 'check_config_item_detail'
+    </sql>
+	
+    <select id="selectCheckProblemConfigList" parameterType="CheckProblemConfig" resultMap="CheckProblemConfigResult">
+        <include refid="selectCheckProblemConfigVo"/>
+        <where>  
+            <if test="problemConfigId != null "> and problem_config_id = #{problemConfigId}</if>
+             <if test="deptId != null "> and dept_id = #{deptId}</if>
+             <if test="itemName != null  and itemName != '' "> and item_name = #{itemName}</if>
+             <if test="percent != null "> and percent = #{percent}</if>
+             <if test="raction != null "> and raction = #{raction}</if>
+             <if test="subItemName != null  and subItemName != '' "> and sub_item_name = #{subItemName}</if>
+             <if test="problemId != null "> and problem_id = #{problemId}</if>
+         </where>
+    </select>
+    
+    <select id="selectCheckProblemConfigById" parameterType="Integer" resultMap="CheckProblemConfigResult">
+        <include refid="selectCheckProblemConfigVo"/>
+        where problem_config_id = #{problemConfigId}
+    </select>
+        
+    <insert id="insertCheckProblemConfig" parameterType="CheckProblemConfig" useGeneratedKeys="true" keyProperty="problemConfigId">
+        insert into check_problem_config
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="deptId != null  ">dept_id,</if>
+			<if test="itemName != null  and itemName != ''  ">item_name,</if>
+			<if test="percent != null  ">percent,</if>
+			<if test="raction != null  ">raction,</if>
+			<if test="subItemName != null  and subItemName != ''  ">sub_item_name,</if>
+			<if test="problemId != null  ">problem_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="deptId != null  ">#{deptId},</if>
+			<if test="itemName != null  and itemName != ''  ">#{itemName},</if>
+			<if test="percent != null  ">#{percent},</if>
+			<if test="raction != null  ">#{raction},</if>
+			<if test="subItemName != null  and subItemName != ''  ">#{subItemName},</if>
+			<if test="problemId != null  ">#{problemId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCheckProblemConfig" parameterType="CheckProblemConfig">
+        update check_problem_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deptId != null  ">dept_id = #{deptId},</if>
+            <if test="itemName != null  and itemName != ''  ">item_name = #{itemName},</if>
+            <if test="percent != null  ">percent = #{percent},</if>
+            <if test="raction != null  ">raction = #{raction},</if>
+            <if test="subItemName != null  and subItemName != ''  ">sub_item_name = #{subItemName},</if>
+            <if test="problemId != null  ">problem_id = #{problemId},</if>
+        </trim>
+        where problem_config_id = #{problemConfigId}
+    </update>
+
+	<delete id="deleteCheckProblemConfigById" parameterType="Integer">
+        delete from check_problem_config where problem_config_id = #{problemConfigId}
+    </delete>
+	
+    <delete id="deleteCheckProblemConfigByIds" parameterType="String">
+        delete from check_problem_config where problem_config_id in 
+        <foreach item="problemConfigId" collection="array" open="(" separator="," close=")">
+            #{problemConfigId}
+        </foreach>
+    </delete>
+    
+</mapper>

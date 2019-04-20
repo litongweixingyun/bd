@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-shopPosition-edit" th:object="${shopPosition}">
+            <input id="positionId" name="positionId" th:field="*{positionId}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">店铺ID：</label>
+				<div class="col-sm-8">
+					<select name="shopId" id="shopId" class="form-control">
+						<option th:selected="${shop.shopId eq shopPosition.shopId}"
+								th:each="shop:${shops}" th:value="${shop.shopId}"
+								th:text="${shop.shopName}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">岗位名称：</label>
+				<div class="col-sm-8">
+					<input id="positionName" name="positionName" th:field="*{positionName}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/shopPosition";
+		$("#form-shopPosition-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-shopPosition-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

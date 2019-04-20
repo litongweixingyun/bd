@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-checkProblemConfig-edit" th:object="${checkProblemConfig}">
+            <input id="problemConfigId" name="problemConfigId" th:field="*{problemConfigId}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">部门id：</label>
+				<div class="col-sm-8">
+					<select name="deptId" id="deptId" class="form-control">
+						<option th:selected="${dept.deptId eq checkProblemConfig.deptId}"
+								th:each="dept:${depts}" th:value="${dept.deptId}"
+								th:text="${dept.deptName}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">条目名称：</label>
+
+
+				<div class="col-sm-8">
+					<select id="itemName" name="itemName" class="form-control">
+
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">占比：</label>
+				<div class="col-sm-8">
+					<input id="percent" name="percent" readonly th:field="*{percent}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">每项扣分：</label>
+				<div class="col-sm-8">
+					<input id="raction" name="raction" readonly th:field="*{raction}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">条目小项：</label>
+
+				<div class="col-sm-8">
+					<div class="input-group" style="width: 100%">
+						<select name="subItemName" class="form-control m-b" th:with="type=${@dict.getType('check_config_item_detail')}">
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{itemName}"></option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">问题ID：</label>
+
+				<div class="col-sm-8">
+					<select name="problemId" id="problemId" class="form-control">
+						<option th:selected="${problem.problemId eq checkProblemConfig.deptId}"
+								th:each="problem:${problems}" th:value="${problem.problemId}"
+								th:text="${problem.problemName}"></option>
+					</select>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/checkProblemConfig";
+		$("#form-checkProblemConfig-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-checkProblemConfig-edit').serialize());
+	        }
+	    };
+
+		$("#deptId").change(function(){
+			var deptId = $("#deptId").val();
+			if(deptId ==''){
+				return;
+			}
+			$("#itemName").val();
+			$("#percent").val();
+			$("#raction").val();
+
+			$.ajax({
+				url:'/system/checkConfig/itemlist/'+deptId,
+				async:false,
+				type:'get',
+
+				success:function(data){
+					var t2 = $("#itemName").empty();
+
+					for ( var i = 0; i < data.length; i++) {
+						t2.append("<option value='"+data[i].itemName+"'>"+ data[i].itemName+"</option>");
+					}
+				}
+			})
+		});
+
+		$("#itemName").change(function(){
+			var deptId = $("#deptId").val();
+
+			var itemName = $("#itemName").val();
+			if(deptId =='' || itemName ==''){
+				return;
+			}
+			$("#itemName").val();
+			$("#percent").val();
+			$("#raction").val();
+			$.ajax({
+				url:'/system/checkConfig/itemlist/'+deptId +'/'+itemName,
+				async:false,
+				type:'get',
+				success:function(data){
+					if(data == null){
+						layer.msg("未查询到数据");
+					}else{
+						$("#percent").val(data.percent);
+						$("#raction").val(data.raction);
+					}
+				}
+			})
+		});
+	</script>
+</body>
+</html>
