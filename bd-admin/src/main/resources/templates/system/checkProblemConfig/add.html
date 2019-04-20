@@ -83,9 +83,9 @@
 			if(deptId ==''){
 				return;
 			}
-			$("#itemName").val();
-			$("#percent").val();
-			$("#raction").val();
+			$("#itemName").empty();
+			$("#percent").empty();
+			$("#raction").empty();
 			$.ajax({
 				url:'/system/checkConfig/itemlist/'+deptId,
 				async:false,
