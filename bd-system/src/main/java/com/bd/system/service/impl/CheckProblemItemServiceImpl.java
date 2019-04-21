@@ -1,14 +1,15 @@
 package com.bd.system.service.impl;
 
-import java.util.List;
-
+import com.bd.common.core.text.Convert;
+import com.bd.system.domain.CheckProblemItem;
+import com.bd.system.mapper.CheckProblemItemMapper;
+import com.bd.system.service.ICheckProblemItemService;
 import com.bd.system.vo.BigitemVO;
+import com.bd.system.vo.CheckRecordResultDetailVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.bd.system.mapper.CheckProblemItemMapper;
-import com.bd.system.domain.CheckProblemItem;
-import com.bd.system.service.ICheckProblemItemService;
-import com.bd.common.core.text.Convert;
+
+import java.util.List;
 
 /**
  * 巡店大项问题 服务层实现
@@ -85,6 +86,11 @@ public class CheckProblemItemServiceImpl implements ICheckProblemItemService
 	@Override
 	public BigitemVO selectBigitemList(Long deptId) {
 		return checkProblemItemMapper.selectBigitemList(deptId);
+	}
+
+	@Override
+	public List<CheckRecordResultDetailVO> selectCheckProblemItemByCheckRecordId(Integer checkRecordId) {
+		return checkProblemItemMapper.selectCheckProblemItemByCheckRecordId(checkRecordId);
 	}
 
 }

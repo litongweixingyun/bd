@@ -6,14 +6,20 @@ import com.bd.common.core.domain.AjaxResult;
 import com.bd.common.utils.DateUtils;
 import com.bd.common.utils.StringUtils;
 import com.bd.system.domain.CheckRecord;
+import com.bd.system.service.ICheckProblemItemService;
 import com.bd.system.service.ICheckRecordService;
+import com.bd.system.vo.CheckRecordResultDetailVO;
+import com.bd.system.vo.CheckRecordResultVO;
 import com.bd.system.vo.CheckRecordVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 检查记录 信息操作处理
@@ -28,6 +34,8 @@ public class MCheckRecordController extends BaseController
 
 	@Autowired
 	private ICheckRecordService checkRecordService;
+	@Autowired
+	private ICheckProblemItemService checkProblemItemService;
 
 	/**
 	 * {
@@ -76,6 +84,44 @@ public class MCheckRecordController extends BaseController
 		int i = checkRecordService.updateCheckRecord(record);
 		return toAjax(i);
 
+	}
+
+	/**
+	 * {
+	 *   "checkrecordid": "string",
+	 *   "deptId": "string",
+	 *   "deptName": "string",
+	 *   "shopId": "string",
+	 *   "shopName": "string",
+	 *   "createTime": "string",
+	 *   "createBy": "string",
+	 *   "problems": 0,
+	 *   "totalScore": 0,
+	 *   "checkNum": 0,
+	 *   "details": [
+	 *     {
+	 *       "itemName": "string",
+	 *       "itemId": "string",
+	 *       "problems": 0
+	 *     }
+	 *   ]
+	 * }
+	 * @param checkRecordId
+	 * @return
+	 */
+	@GetMapping("/result/{checkRecordId}")
+	public CheckRecordResultVO result(@PathVariable("checkRecordId") Integer checkRecordId){
+		CheckRecordResultVO record = checkRecordService.selectCheckRecordByCheckRecordId(checkRecordId);
+
+		if(record != null){
+			List<CheckRecordResultDetailVO> checkProblemItems = checkProblemItemService.selectCheckProblemItemByCheckRecordId(checkRecordId);
+			for (CheckRecordResultDetailVO checkProblemItem : checkProblemItems) {
+				checkProblemItem.setItemScore(checkProblemItem.getItemScore() + 100);
+			}
+			record.setDetailList(checkProblemItems);
+		}
+
+		return record ;
 	}
 
 }

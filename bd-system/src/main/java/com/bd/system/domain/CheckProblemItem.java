@@ -1,9 +1,7 @@
 package com.bd.system.domain;
 
-import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.bd.common.core.domain.BaseEntity;
+import lombok.Data;
 
 /**
  * 巡店大项问题表 check_problem_Item
@@ -24,10 +22,14 @@ public class CheckProblemItem extends BaseEntity
 	private Integer shopId;
 	/** 大项id */
 	private Integer itemId;
+
 	private Integer subItemId;
 	/** 大项总份 */
 	private Integer itemScore;
 	/** 巡店记录Id */
 	private Integer checkRecordId;
+
+	private String itemName;
+	private Integer problems;
 
 }

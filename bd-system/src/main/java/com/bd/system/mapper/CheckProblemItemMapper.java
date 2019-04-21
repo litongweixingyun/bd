@@ -2,6 +2,7 @@ package com.bd.system.mapper;
 
 import com.bd.system.domain.CheckProblemItem;
 import com.bd.system.vo.BigitemVO;
+import com.bd.system.vo.CheckRecordResultDetailVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -63,4 +64,6 @@ public interface CheckProblemItemMapper
 	public int deleteCheckProblemItemByIds(String[] problemItemIds);
 
     BigitemVO selectBigitemList(@Param("deptId") Long deptId);
+
+	List<CheckRecordResultDetailVO> selectCheckProblemItemByCheckRecordId(@Param("checkRecordId") Integer checkRecordId);
 }

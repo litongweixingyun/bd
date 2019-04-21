@@ -1,6 +1,8 @@
 package com.bd.system.service;
 
 import com.bd.system.domain.CheckRecord;
+import com.bd.system.vo.CheckRecordResultVO;
+
 import java.util.List;
 
 /**
@@ -52,4 +54,6 @@ public interface ICheckRecordService
 	public int deleteCheckRecordByIds(String ids);
 
     int selectCount(Integer deptId,Integer shopId,String dateToStr);
+
+	CheckRecordResultVO selectCheckRecordByCheckRecordId(Integer checkRecordId);
 }

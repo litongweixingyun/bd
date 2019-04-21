@@ -16,10 +16,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="changed"    column="changed"    />
         <result property="totalScore"    column="total_score"    />
         <result property="checkNum"    column="check_num"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="shopName"    column="shop_name"    />
     </resultMap>
 	
 	<sql id="selectCheckRecordVo">
-        select check_record_id, dept_id, shop_id, create_by, create_time, status, complete_time, problems, changed, total_score, check_num from check_record
+        select cr.check_record_id, cr.dept_id, cr.shop_id, cr.create_by,
+        cr.create_time, cr.status, cr.complete_time, cr.problems, cr.changed,
+        cr.total_score, cr.check_num
+        ,sd.dept_name,ss.shop_name
+        from check_record cr
+        left join sys_dept sd on cr.dept_id = sd.dept_id
+        left join sys_shop ss on cr.shop_id = ss.shop_id
     </sql>
 	
     <select id="selectCheckRecordList" parameterType="CheckRecord" resultMap="CheckRecordResult">
@@ -89,7 +97,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where check_record_id = #{checkRecordId}
     </update>
 
-	<delete id="deleteCheckRecordById" parameterType="Integer">
+
+    <delete id="deleteCheckRecordById" parameterType="Integer">
         delete from check_record where check_record_id = #{checkRecordId}
     </delete>
 	
@@ -104,5 +113,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select count(1) from check_record
         where dept_id = #{deptId} and shop_id = #{shopId} and create_time like  concat(#{dateToStr},'%')
     </select>
-    
+
+    <resultMap type="com.bd.system.vo.CheckRecordResultVO" id="CheckRecordResult2">
+        <result property="checkRecordId"    column="check_record_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="shopId"    column="shop_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="problems"    column="problems"    />
+        <result property="totalScore"    column="total_score"    />
+        <result property="checkNum"    column="check_num"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="shopName"    column="shop_name"    />
+    </resultMap>
+    <select id="selectCheckRecordByCheckRecordId" parameterType="Integer" resultMap="CheckRecordResult2">
+        <include refid="selectCheckRecordVo"/>
+        where check_record_id = #{checkRecordId}
+    </select>
+
+    <update id="updateCheckRecordById">
+        update check_record
+        set problems = problems+1 ,total_score = total_score + #{score}
+        where check_record_id = #{checkRecordId}
+    </update>
 </mapper>

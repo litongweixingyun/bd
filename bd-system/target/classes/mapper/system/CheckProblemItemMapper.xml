@@ -12,6 +12,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="subItemId"    column="sub_item_id"    />
         <result property="itemScore"    column="item_score"    />
         <result property="checkRecordId"    column="check_record_id"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="problems"    column="problems"    />
     </resultMap>
 	
 	<sql id="selectCheckProblemItemVo">
@@ -105,6 +107,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE
             cpc.dept_id = #{deptId}
             group by cpc.item_id;
+    </select>
+
+    <resultMap type="com.bd.system.vo.CheckRecordResultDetailVO" id="CheckProblemItemResult2">
+        <result property="itemId"    column="item_id"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="problems"    column="problems"    />
+        <result property="itemScore"    column="item_score"    />
+    </resultMap>
+    <select id="selectCheckProblemItemByCheckRecordId" resultMap="CheckProblemItemResult2">
+        SELECT
+            cpi.*  ,count(cpsi.problem_sub_item_id) problems,sdd.dict_label item_name
+        FROM
+            check_problem_Item cpi
+            LEFT JOIN check_problem_sub_Item cpsi ON cpi.problem_item_id = cpsi.problem_item_id
+            left join sys_dict_data sdd on cpi.item_id = sdd.dict_value and sdd.dict_type = 'check_config_item'
+            where cpi.check_record_id = #{checkRecordId}
+            GROUP BY cpi.problem_item_id
     </select>
 
 </mapper>

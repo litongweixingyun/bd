@@ -2,6 +2,7 @@ package com.bd.system.service;
 
 import com.bd.system.domain.CheckProblemItem;
 import com.bd.system.vo.BigitemVO;
+import com.bd.system.vo.CheckRecordResultDetailVO;
 
 import java.util.List;
 
@@ -54,4 +55,6 @@ public interface ICheckProblemItemService
 	public int deleteCheckProblemItemByIds(String ids);
 
     BigitemVO selectBigitemList(Long deptId);
+
+	List<CheckRecordResultDetailVO> selectCheckProblemItemByCheckRecordId(Integer checkRecordId);
 }

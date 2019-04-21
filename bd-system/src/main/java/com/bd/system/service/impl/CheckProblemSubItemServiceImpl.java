@@ -1,23 +1,22 @@
 package com.bd.system.service.impl;
 
-import java.util.Date;
-import java.util.List;
-
+import com.bd.common.core.text.Convert;
 import com.bd.system.domain.CheckProblemConfig;
 import com.bd.system.domain.CheckProblemItem;
+import com.bd.system.domain.CheckProblemSubItem;
 import com.bd.system.mapper.CheckProblemConfigMapper;
 import com.bd.system.mapper.CheckProblemItemMapper;
+import com.bd.system.mapper.CheckProblemSubItemMapper;
+import com.bd.system.mapper.CheckRecordMapper;
+import com.bd.system.service.ICheckProblemSubItemService;
 import com.bd.system.vo.CheckProblemItemVO;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.bd.system.mapper.CheckProblemSubItemMapper;
-import com.bd.system.domain.CheckProblemSubItem;
-import com.bd.system.service.ICheckProblemSubItemService;
-import com.bd.common.core.text.Convert;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 巡店明细问题 服务层实现
@@ -34,6 +33,8 @@ public class CheckProblemSubItemServiceImpl implements ICheckProblemSubItemServi
 	private CheckProblemItemMapper checkProblemItemMapper;
 	@Resource
 	private CheckProblemConfigMapper checkProblemConfigMapper;
+	@Resource
+	private CheckRecordMapper checkRecordMapper;
 
 	/**
      * 查询巡店明细问题信息
@@ -114,7 +115,7 @@ public class CheckProblemSubItemServiceImpl implements ICheckProblemSubItemServi
 		Integer checkProblemItem = 0;
 		if(CollectionUtils.isEmpty(checkProblemItems)){
 			item.setItemScore(-raction);
-			 checkProblemItemMapper.insertCheckProblemItem(item);
+			checkProblemItemMapper.insertCheckProblemItem(item);
 			checkProblemItem = item.getProblemItemId();
 		}else {
 			item.setItemScore(checkProblemItems.get(0).getItemScore()-raction);
@@ -122,6 +123,8 @@ public class CheckProblemSubItemServiceImpl implements ICheckProblemSubItemServi
 			checkProblemItemMapper.updateCheckProblemItem(item);
 			checkProblemItem = checkProblemItems.get(0).getProblemItemId();
 		}
+
+		checkRecordMapper.updateCheckRecordById(vo.getCheckRecordId(),-raction);
 
 		CheckProblemSubItem  subItem = new CheckProblemSubItem();
 		subItem.setDescription(vo.getDescription());

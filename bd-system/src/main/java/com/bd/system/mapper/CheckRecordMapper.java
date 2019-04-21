@@ -1,6 +1,7 @@
 package com.bd.system.mapper;
 
 import com.bd.system.domain.CheckRecord;
+import com.bd.system.vo.CheckRecordResultVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;	
@@ -62,5 +63,8 @@ public interface CheckRecordMapper
 	public int deleteCheckRecordByIds(String[] checkRecordIds);
 
     int selectCount(@Param("deptId")Integer deptId,@Param("shopId")Integer shopId, @Param("dateToStr") String dateToStr);
-    
+
+	CheckRecordResultVO selectCheckRecordByCheckRecordId(Integer checkRecordId);
+
+    void updateCheckRecordById(@Param("checkRecordId") Integer checkRecordId,@Param("score") Integer score);
 }
