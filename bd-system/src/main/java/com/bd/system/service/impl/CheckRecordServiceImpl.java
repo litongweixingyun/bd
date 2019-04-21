@@ -4,6 +4,7 @@ import com.bd.common.core.text.Convert;
 import com.bd.system.domain.CheckRecord;
 import com.bd.system.mapper.CheckRecordMapper;
 import com.bd.system.service.ICheckRecordService;
+import com.bd.system.vo.CheckHistoryVO;
 import com.bd.system.vo.CheckRecordResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,6 +91,11 @@ public class CheckRecordServiceImpl implements ICheckRecordService
 	@Override
 	public CheckRecordResultVO selectCheckRecordByCheckRecordId(Integer checkRecordId) {
 		return checkRecordMapper.selectCheckRecordByCheckRecordId(checkRecordId);
+	}
+
+	@Override
+	public List<CheckRecord> selectCheckRecordHistory(CheckHistoryVO vo) {
+		return checkRecordMapper.selectCheckRecordHistory(vo);
 	}
 
 }

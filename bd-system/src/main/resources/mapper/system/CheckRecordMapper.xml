@@ -130,6 +130,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectCheckRecordVo"/>
         where check_record_id = #{checkRecordId}
     </select>
+    <select id="selectCheckRecordHistory" resultMap="CheckRecordResult">
+        select * from  check_record
+        where dept_id = #{deptId} and shop_id = #{shopId}
+        and create_time like  concat(#{checkDate},'%')
+    </select>
 
     <update id="updateCheckRecordById">
         update check_record

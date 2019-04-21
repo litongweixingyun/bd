@@ -8,6 +8,7 @@ import com.bd.common.utils.StringUtils;
 import com.bd.system.domain.CheckRecord;
 import com.bd.system.service.ICheckProblemItemService;
 import com.bd.system.service.ICheckRecordService;
+import com.bd.system.vo.CheckHistoryVO;
 import com.bd.system.vo.CheckRecordResultDetailVO;
 import com.bd.system.vo.CheckRecordResultVO;
 import com.bd.system.vo.CheckRecordVO;
@@ -124,4 +125,27 @@ public class MCheckRecordController extends BaseController
 		return record ;
 	}
 
+
+	/**
+	 * deptId:            #  部门（非必填，如果没有，就是所有部门的数据）
+	 * shopId:           # 门店（非必填，如果没有，就是所有门店的数据）
+	 * checkDate:       # 查询日期
+	 * @param vo
+	 * @return
+	 */
+
+	/**
+	 * [
+	 *   {
+	 *     "checkNum": 0,
+	 *     "checkDate": "string",
+	 *     "shopId": "string",
+	 *     "totalScore": 0
+	 *   }
+	 * ]
+	 */
+	@PostMapping("/history")
+	public List<CheckRecord> history(CheckHistoryVO vo){
+		return checkRecordService.selectCheckRecordHistory(vo);
+	}
 }
