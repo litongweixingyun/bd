@@ -1,6 +1,8 @@
 package com.bd.system.service;
 
 import com.bd.system.domain.CheckProblemItem;
+import com.bd.system.vo.BigitemVO;
+
 import java.util.List;
 
 /**
@@ -50,5 +52,6 @@ public interface ICheckProblemItemService
      * @return 结果
      */
 	public int deleteCheckProblemItemByIds(String ids);
-	
+
+    BigitemVO selectBigitemList(Long deptId);
 }

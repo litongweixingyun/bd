@@ -1,6 +1,8 @@
 package com.bd.system.service.impl;
 
 import java.util.List;
+
+import com.bd.system.vo.BigitemVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bd.system.mapper.CheckProblemItemMapper;
@@ -79,5 +81,10 @@ public class CheckProblemItemServiceImpl implements ICheckProblemItemService
 	{
 		return checkProblemItemMapper.deleteCheckProblemItemByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public BigitemVO selectBigitemList(Long deptId) {
+		return checkProblemItemMapper.selectBigitemList(deptId);
+	}
+
 }

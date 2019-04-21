@@ -1,7 +1,9 @@
 package com.bd.system.mapper;
 
 import com.bd.system.domain.CheckProblemConfig;
-import java.util.List;	
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 巡店问题配置 数据层
@@ -58,5 +60,6 @@ public interface CheckProblemConfigMapper
      * @return 结果
      */
 	public int deleteCheckProblemConfigByIds(String[] problemConfigIds);
-	
+
+	List<CheckProblemConfig> selectCheckProblemConfig(@Param("deptId") Long deptId,@Param("itemId") Long itemId, @Param("subItemId")Long subItemId);
 }

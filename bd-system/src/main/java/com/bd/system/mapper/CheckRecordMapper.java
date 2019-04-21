@@ -1,13 +1,15 @@
 package com.bd.system.mapper;
 
 import com.bd.system.domain.CheckRecord;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;	
 
 /**
  * 检查记录 数据层
  * 
  * @author luxuewei
- * @date 2019-03-25
+ * @date 2019-04-21
  */
 public interface CheckRecordMapper 
 {
@@ -58,5 +60,7 @@ public interface CheckRecordMapper
      * @return 结果
      */
 	public int deleteCheckRecordByIds(String[] checkRecordIds);
-	
+
+    int selectCount(@Param("deptId")Integer deptId,@Param("shopId")Integer shopId, @Param("dateToStr") String dateToStr);
+    
 }

@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectCheckProblemConfigVo"/>
         where problem_config_id = #{problemConfigId}
     </select>
-        
+
     <insert id="insertCheckProblemConfig" parameterType="CheckProblemConfig" useGeneratedKeys="true" keyProperty="problemConfigId">
         insert into check_problem_config
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -89,5 +89,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{problemConfigId}
         </foreach>
     </delete>
-    
+
+
+    <resultMap type="com.bd.system.vo.ProblemVO" id="ProblemResult">
+        <result property="percent"    column="percent"    />
+        <result property="raction"    column="raction"    />
+        <result property="problemItemId"    column="problem_item_id"    />
+        <result property="problemName"    column="problem_name"    />
+    </resultMap>
+    <select id="selectCheckProblemConfig" resultMap="ProblemResult">
+        SELECT
+            cpi.problem_item_id,cp.problem_name,cpc.percent,cpc.raction
+        FROM
+            check_problem_config cpc
+            LEFT JOIN check_problem cp ON cpc.problem_id = cp.problem_id
+            left join check_problem_Item cpi on cpc.dept_id = cpi.dept_id and cpc.item_id = cpi.item_id and cpc.sub_item_id = cpi.sub_item_id
+        where cpc.dept_id = #{deptId} and cpc.item_id = #{itemId} and cpc.sub_item_id = #{subItemId}
+
+    </select>
+
+
 </mapper>

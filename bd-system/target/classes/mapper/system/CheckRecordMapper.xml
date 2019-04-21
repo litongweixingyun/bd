@@ -8,25 +8,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="checkRecordId"    column="check_record_id"    />
         <result property="deptId"    column="dept_id"    />
         <result property="shopId"    column="shop_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+        <result property="completeTime"    column="complete_time"    />
         <result property="problems"    column="problems"    />
         <result property="changed"    column="changed"    />
         <result property="totalScore"    column="total_score"    />
-        <result property="security"    column="security"    />
-        <result property="service"    column="service"    />
-        <result property="chupin"    column="chupin"    />
-        <result property="environment"    column="environment"    />
-        <result property="finance"    column="finance"    />
-        <result property="personnal"    column="personnal"    />
-        <result property="sanliulingDu"    column="sanliuling_du"    />
-        <result property="execution"    column="execution"    />
-        <result property="createBy"    column="create_by"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateBy"    column="update_by"    />
-        <result property="updateTime"    column="update_time"    />
+        <result property="checkNum"    column="check_num"    />
     </resultMap>
 	
 	<sql id="selectCheckRecordVo">
-        select check_record_id, dept_id, shop_id, problems, changed, total_score, security, service, chupin, environment, finance, personnal, sanliuling_du, execution, create_by, create_time, update_by, update_time from check_record
+        select check_record_id, dept_id, shop_id, create_by, create_time, status, complete_time, problems, changed, total_score, check_num from check_record
     </sql>
 	
     <select id="selectCheckRecordList" parameterType="CheckRecord" resultMap="CheckRecordResult">
@@ -35,23 +28,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="checkRecordId != null "> and check_record_id = #{checkRecordId}</if>
              <if test="deptId != null "> and dept_id = #{deptId}</if>
              <if test="shopId != null "> and shop_id = #{shopId}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="status != null "> and status = #{status}</if>
+             <if test="completeTime != null "> and complete_time = #{completeTime}</if>
              <if test="problems != null "> and problems = #{problems}</if>
              <if test="changed != null "> and changed = #{changed}</if>
              <if test="totalScore != null "> and total_score = #{totalScore}</if>
-             <if test="security != null "> and security = #{security}</if>
-             <if test="service != null "> and service = #{service}</if>
-             <if test="chupin != null "> and chupin = #{chupin}</if>
-             <if test="environment != null "> and environment = #{environment}</if>
-             <if test="finance != null "> and finance = #{finance}</if>
-             <if test="personnal != null "> and personnal = #{personnal}</if>
-             <if test="sanliulingDu != null "> and sanliuling_du = #{sanliulingDu}</if>
-             <if test="execution != null "> and execution = #{execution}</if>
-             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
-             <if test="createTime != null "> and create_time = #{createTime}</if>
-             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
-             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="checkNum != null "> and check_num = #{checkNum}</if>
          </where>
-        order by create_time desc
     </select>
     
     <select id="selectCheckRecordById" parameterType="Integer" resultMap="CheckRecordResult">
@@ -64,40 +49,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="deptId != null  ">dept_id,</if>
 			<if test="shopId != null  ">shop_id,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="status != null  ">status,</if>
+			<if test="completeTime != null  ">complete_time,</if>
 			<if test="problems != null  ">problems,</if>
 			<if test="changed != null  ">changed,</if>
 			<if test="totalScore != null  ">total_score,</if>
-			<if test="security != null  ">security,</if>
-			<if test="service != null  ">service,</if>
-			<if test="chupin != null  ">chupin,</if>
-			<if test="environment != null  ">environment,</if>
-			<if test="finance != null  ">finance,</if>
-			<if test="personnal != null  ">personnal,</if>
-			<if test="sanliulingDu != null  ">sanliuling_du,</if>
-			<if test="execution != null  ">execution,</if>
-			<if test="createBy != null  and createBy != ''  ">create_by,</if>
-			<if test="createTime != null  ">create_time,</if>
-			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
-			<if test="updateTime != null  ">update_time,</if>
+			<if test="checkNum != null  ">check_num,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="deptId != null  ">#{deptId},</if>
 			<if test="shopId != null  ">#{shopId},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="status != null  ">#{status},</if>
+			<if test="completeTime != null  ">#{completeTime},</if>
 			<if test="problems != null  ">#{problems},</if>
 			<if test="changed != null  ">#{changed},</if>
 			<if test="totalScore != null  ">#{totalScore},</if>
-			<if test="security != null  ">#{security},</if>
-			<if test="service != null  ">#{service},</if>
-			<if test="chupin != null  ">#{chupin},</if>
-			<if test="environment != null  ">#{environment},</if>
-			<if test="finance != null  ">#{finance},</if>
-			<if test="personnal != null  ">#{personnal},</if>
-			<if test="sanliulingDu != null  ">#{sanliulingDu},</if>
-			<if test="execution != null  ">#{execution},</if>
-			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
-			<if test="createTime != null  ">#{createTime},</if>
-			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
-			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="checkNum != null  ">#{checkNum},</if>
          </trim>
     </insert>
 	 
@@ -106,21 +77,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="deptId != null  ">dept_id = #{deptId},</if>
             <if test="shopId != null  ">shop_id = #{shopId},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="status != null  ">status = #{status},</if>
+            <if test="completeTime != null  ">complete_time = #{completeTime},</if>
             <if test="problems != null  ">problems = #{problems},</if>
             <if test="changed != null  ">changed = #{changed},</if>
             <if test="totalScore != null  ">total_score = #{totalScore},</if>
-            <if test="security != null  ">security = #{security},</if>
-            <if test="service != null  ">service = #{service},</if>
-            <if test="chupin != null  ">chupin = #{chupin},</if>
-            <if test="environment != null  ">environment = #{environment},</if>
-            <if test="finance != null  ">finance = #{finance},</if>
-            <if test="personnal != null  ">personnal = #{personnal},</if>
-            <if test="sanliulingDu != null  ">sanliuling_du = #{sanliulingDu},</if>
-            <if test="execution != null  ">execution = #{execution},</if>
-            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
-            <if test="createTime != null  ">create_time = #{createTime},</if>
-            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
-            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="checkNum != null  ">check_num = #{checkNum},</if>
         </trim>
         where check_record_id = #{checkRecordId}
     </update>
@@ -135,5 +99,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{checkRecordId}
         </foreach>
     </delete>
+
+    <select id="selectCount" resultType="int">
+        select count(1) from check_record
+        where dept_id = #{deptId} and shop_id = #{shopId} and create_time like  concat(#{dateToStr},'%')
+    </select>
     
 </mapper>

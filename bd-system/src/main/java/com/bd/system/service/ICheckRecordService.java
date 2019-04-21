@@ -7,7 +7,7 @@ import java.util.List;
  * 检查记录 服务层
  * 
  * @author luxuewei
- * @date 2019-03-25
+ * @date 2019-04-21
  */
 public interface ICheckRecordService 
 {
@@ -50,5 +50,6 @@ public interface ICheckRecordService
      * @return 结果
      */
 	public int deleteCheckRecordByIds(String ids);
-	
+
+    int selectCount(Integer deptId,Integer shopId,String dateToStr);
 }

@@ -1,7 +1,10 @@
 package com.bd.system.mapper;
 
 import com.bd.system.domain.CheckProblemItem;
-import java.util.List;	
+import com.bd.system.vo.BigitemVO;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 巡店大项问题 数据层
@@ -58,5 +61,6 @@ public interface CheckProblemItemMapper
      * @return 结果
      */
 	public int deleteCheckProblemItemByIds(String[] problemItemIds);
-	
+
+    BigitemVO selectBigitemList(@Param("deptId") Long deptId);
 }

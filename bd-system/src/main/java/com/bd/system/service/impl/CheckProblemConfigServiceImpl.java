@@ -79,5 +79,10 @@ public class CheckProblemConfigServiceImpl implements ICheckProblemConfigService
 	{
 		return checkProblemConfigMapper.deleteCheckProblemConfigByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public List<CheckProblemConfig> selectCheckProblemConfig(Long deptId, Long itemId, Long subItemId) {
+		return checkProblemConfigMapper.selectCheckProblemConfig( deptId,  itemId,  subItemId);
+	}
+
 }

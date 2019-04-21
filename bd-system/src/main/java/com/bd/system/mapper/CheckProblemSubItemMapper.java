@@ -58,5 +58,5 @@ public interface CheckProblemSubItemMapper
      * @return 结果
      */
 	public int deleteCheckProblemSubItemByIds(String[] problemSubItemIds);
-	
+
 }

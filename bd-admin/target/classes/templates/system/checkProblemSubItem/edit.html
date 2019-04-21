@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-checkProblemSubItem-edit" th:object="${checkProblemSubItem}">
+            <input id="problemSubItemId" name="problemSubItemId" th:field="*{problemSubItemId}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">大项问题表id：</label>
+				<div class="col-sm-8">
+					<input id="problemItemId" name="problemItemId" th:field="*{problemItemId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">店铺id：</label>
+				<div class="col-sm-8">
+					<input id="score" name="score" th:field="*{score}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">图片地址：</label>
+				<div class="col-sm-8">
+					<input id="picUrl" name="picUrl" th:field="*{picUrl}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">问题描述：</label>
+				<div class="col-sm-8">
+					<input id="description" name="description" th:field="*{description}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">创建时间：</label>
+				<div class="col-sm-8">
+					<input id="createTime" name="createTime" th:field="*{createTime}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/checkProblemSubItem";
+		$("#form-checkProblemSubItem-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-checkProblemSubItem-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

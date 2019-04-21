@@ -1,16 +1,17 @@
 package com.bd.system.domain;
 
+import com.bd.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.bd.common.core.domain.BaseEntity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 检查记录表 check_record
  * 
  * @author luxuewei
- * @date 2019-03-25
+ * @date 2019-04-21
  */
 public class CheckRecord extends BaseEntity
 {
@@ -20,10 +21,16 @@ public class CheckRecord extends BaseEntity
 	private Integer checkRecordId;
 	/**  */
 	private Integer deptId;
-	private String deptName;
 	/**  */
 	private Integer shopId;
-	private String shopName;
+	/**  */
+	private String createBy;
+	/**  */
+	private Date createTime;
+	/**  */
+	private Integer status;
+	/**  */
+	private Date completeTime;
 	/**  */
 	private Integer problems;
 	/**  */
@@ -31,21 +38,7 @@ public class CheckRecord extends BaseEntity
 	/**  */
 	private BigDecimal totalScore;
 	/**  */
-	private BigDecimal security;
-	/**  */
-	private BigDecimal service;
-	/**  */
-	private BigDecimal chupin;
-	/**  */
-	private BigDecimal environment;
-	/**  */
-	private BigDecimal finance;
-	/**  */
-	private BigDecimal personnal;
-	/**  */
-	private BigDecimal sanliulingDu;
-	/**  */
-	private BigDecimal execution;
+	private Integer checkNum;
 
 	public void setCheckRecordId(Integer checkRecordId) 
 	{
@@ -74,6 +67,42 @@ public class CheckRecord extends BaseEntity
 	{
 		return shopId;
 	}
+	public void setCreateBy(String createBy) 
+	{
+		this.createBy = createBy;
+	}
+
+	public String getCreateBy() 
+	{
+		return createBy;
+	}
+	public void setCreateTime(Date createTime) 
+	{
+		this.createTime = createTime;
+	}
+
+	public Date getCreateTime() 
+	{
+		return createTime;
+	}
+	public void setStatus(Integer status) 
+	{
+		this.status = status;
+	}
+
+	public Integer getStatus() 
+	{
+		return status;
+	}
+	public void setCompleteTime(Date completeTime) 
+	{
+		this.completeTime = completeTime;
+	}
+
+	public Date getCompleteTime() 
+	{
+		return completeTime;
+	}
 	public void setProblems(Integer problems) 
 	{
 		this.problems = problems;
@@ -101,77 +130,14 @@ public class CheckRecord extends BaseEntity
 	{
 		return totalScore;
 	}
-	public void setSecurity(BigDecimal security) 
+	public void setCheckNum(Integer checkNum) 
 	{
-		this.security = security;
+		this.checkNum = checkNum;
 	}
 
-	public BigDecimal getSecurity() 
+	public Integer getCheckNum() 
 	{
-		return security;
-	}
-	public void setService(BigDecimal service) 
-	{
-		this.service = service;
-	}
-
-	public BigDecimal getService() 
-	{
-		return service;
-	}
-	public void setChupin(BigDecimal chupin) 
-	{
-		this.chupin = chupin;
-	}
-
-	public BigDecimal getChupin() 
-	{
-		return chupin;
-	}
-	public void setEnvironment(BigDecimal environment) 
-	{
-		this.environment = environment;
-	}
-
-	public BigDecimal getEnvironment() 
-	{
-		return environment;
-	}
-	public void setFinance(BigDecimal finance) 
-	{
-		this.finance = finance;
-	}
-
-	public BigDecimal getFinance() 
-	{
-		return finance;
-	}
-	public void setPersonnal(BigDecimal personnal) 
-	{
-		this.personnal = personnal;
-	}
-
-	public BigDecimal getPersonnal() 
-	{
-		return personnal;
-	}
-	public void setSanliulingDu(BigDecimal sanliulingDu) 
-	{
-		this.sanliulingDu = sanliulingDu;
-	}
-
-	public BigDecimal getSanliulingDu() 
-	{
-		return sanliulingDu;
-	}
-	public void setExecution(BigDecimal execution) 
-	{
-		this.execution = execution;
-	}
-
-	public BigDecimal getExecution() 
-	{
-		return execution;
+		return checkNum;
 	}
 
     public String toString() {
@@ -179,21 +145,14 @@ public class CheckRecord extends BaseEntity
             .append("checkRecordId", getCheckRecordId())
             .append("deptId", getDeptId())
             .append("shopId", getShopId())
+            .append("createBy", getCreateBy())
+            .append("createTime", getCreateTime())
+            .append("status", getStatus())
+            .append("completeTime", getCompleteTime())
             .append("problems", getProblems())
             .append("changed", getChanged())
             .append("totalScore", getTotalScore())
-            .append("security", getSecurity())
-            .append("service", getService())
-            .append("chupin", getChupin())
-            .append("environment", getEnvironment())
-            .append("finance", getFinance())
-            .append("personnal", getPersonnal())
-            .append("sanliulingDu", getSanliulingDu())
-            .append("execution", getExecution())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
+            .append("checkNum", getCheckNum())
             .toString();
     }
 }

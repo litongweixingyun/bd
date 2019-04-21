@@ -1,18 +1,19 @@
 package com.bd.system.service.impl;
 
-import java.util.List;
+import com.bd.common.core.text.Convert;
+import com.bd.system.domain.CheckRecord;
+import com.bd.system.mapper.CheckRecordMapper;
+import com.bd.system.service.ICheckRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.bd.system.mapper.CheckRecordMapper;
-import com.bd.system.domain.CheckRecord;
-import com.bd.system.service.ICheckRecordService;
-import com.bd.common.core.text.Convert;
+
+import java.util.List;
 
 /**
  * 检查记录 服务层实现
  * 
  * @author luxuewei
- * @date 2019-03-25
+ * @date 2019-04-21
  */
 @Service
 public class CheckRecordServiceImpl implements ICheckRecordService 
@@ -79,5 +80,10 @@ public class CheckRecordServiceImpl implements ICheckRecordService
 	{
 		return checkRecordMapper.deleteCheckRecordByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public int selectCount(Integer deptId,Integer shopId,String dateToStr) {
+		return checkRecordMapper.selectCount(deptId,shopId,dateToStr);
+	}
+
 }

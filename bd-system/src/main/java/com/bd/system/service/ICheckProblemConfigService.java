@@ -50,5 +50,7 @@ public interface ICheckProblemConfigService
      * @return 结果
      */
 	public int deleteCheckProblemConfigByIds(String ids);
-	
+
+	List<CheckProblemConfig> selectCheckProblemConfig(Long deptId, Long itemId, Long subItemId);
+    
 }

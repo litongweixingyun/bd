@@ -7,10 +7,13 @@ import com.bd.system.domain.CheckRecord;
 import com.bd.system.domain.DeptShop;
 import com.bd.system.service.ICheckRecordService;
 import com.bd.system.service.IDeptShopService;
-import com.bd.system.vo.CheckRecordVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -58,15 +61,15 @@ public class CheckController extends BaseController {
 
     }
 
-    @PostMapping("/create")
+    /*@PostMapping("/create")
     public AjaxResult create(CheckRecordVO vo){
         CheckRecord record = new CheckRecord();
-        record.setDeptId(vo.getOrgId());
+        record.setDeptId(vo.getDeptId());
         record.setShopId(vo.getShopId());
         record.setCreateBy(vo.getCreator());
-        record.setCreateTime(vo.getCreateTime());
+        record.setCreateTime(new Date());
         return toAjax(checkRecordService.insertCheckRecord(record));
-    }
+    }*/
 
 
     @GetMapping("/history/{shopId}")

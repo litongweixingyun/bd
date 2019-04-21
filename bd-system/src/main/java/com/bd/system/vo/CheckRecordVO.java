@@ -10,8 +10,7 @@ import java.util.Date;
  */
 @Data
 public class CheckRecordVO {
-    private Integer orgId;
+    private Integer deptId;
     private Integer shopId;
     private String creator;
-    private Date createTime;
 }
