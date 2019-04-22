@@ -40,7 +40,7 @@ public class SysDeptController extends BaseController
     }
 
     @RequiresPermissions("system:dept:list")
-    @GetMapping("/list")
+    @PostMapping("/list")
     @ResponseBody
     public List<SysDept> list(SysDept dept)
     {
