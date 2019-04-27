@@ -63,8 +63,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
         where dept_id = #{deptId}
     </update>
+    <update id="updateCheckNum" parameterType="int">
+        update sys_dept_shop set check_num = check_num - 1
+        where dept_id = #{deptId} and shop_id = #{shopId} and check_num &gt; 0
+    </update>
 
-	<delete id="deleteDeptShopById" parameterType="Integer">
+    <delete id="deleteDeptShopById" parameterType="Integer">
         delete from sys_dept_shop where dept_id = #{deptId}
     </delete>
 	

@@ -6,12 +6,15 @@ import com.bd.common.core.domain.AjaxResult;
 import com.bd.common.utils.DateUtils;
 import com.bd.common.utils.StringUtils;
 import com.bd.system.domain.CheckRecord;
+import com.bd.system.domain.DeptShop;
 import com.bd.system.service.ICheckProblemItemService;
 import com.bd.system.service.ICheckRecordService;
+import com.bd.system.service.IDeptShopService;
 import com.bd.system.vo.CheckHistoryVO;
 import com.bd.system.vo.CheckRecordResultDetailVO;
 import com.bd.system.vo.CheckRecordResultVO;
 import com.bd.system.vo.CheckRecordVO;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +41,8 @@ public class MCheckRecordController extends BaseController
 	private ICheckRecordService checkRecordService;
 	@Autowired
 	private ICheckProblemItemService checkProblemItemService;
+	@Autowired
+	private IDeptShopService deptShopService;
 
 	/**
 	 * {
@@ -62,6 +67,17 @@ public class MCheckRecordController extends BaseController
 		if(deptId == null || shopId == null){
 			return error(500,"请求参数错误");
 		}
+
+		DeptShop deptShop = new DeptShop();
+		deptShop.setDeptId(deptId);
+		deptShop.setShopId(shopId);
+		List<DeptShop> deptShops = deptShopService.selectDeptShopList(deptShop);
+		if(CollectionUtils.isEmpty(deptShops)){
+			return error(500,"无此配置,不允许巡店");
+		}else if(deptShops.get(0).getCheckNum() == 0) {
+			return error(500,"本月巡店次数已用完,不允许巡店");
+		}
+
 		String dateToStr = DateUtils.parseDateToStr("yyyy-MM", new Date());
 		int count = checkRecordService.selectCount(deptId,shopId,dateToStr);
 

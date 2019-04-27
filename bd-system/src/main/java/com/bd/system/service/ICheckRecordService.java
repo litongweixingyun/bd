@@ -1,6 +1,7 @@
 package com.bd.system.service;
 
 import com.bd.system.domain.CheckRecord;
+import com.bd.system.vo.CheckChangedVO;
 import com.bd.system.vo.CheckHistoryVO;
 import com.bd.system.vo.CheckRecordResultVO;
 
@@ -59,4 +60,6 @@ public interface ICheckRecordService
 	CheckRecordResultVO selectCheckRecordByCheckRecordId(Integer checkRecordId);
 
     List<CheckRecord> selectCheckRecordHistory(CheckHistoryVO vo);
+
+    List<CheckChangedVO> selectCheckChangedList();
 }

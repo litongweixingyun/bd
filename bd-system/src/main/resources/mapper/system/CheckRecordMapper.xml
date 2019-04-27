@@ -141,4 +141,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         set problems = problems+1 ,total_score = total_score + #{score}
         where check_record_id = #{checkRecordId}
     </update>
+
+    <resultMap type="com.bd.system.vo.CheckChangedVO" id="CheckChangedResult">
+        <result property="deptId"    column="dept_id"    />
+        <result property="problems"    column="problems"    />
+        <result property="changed"    column="changed"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <select id="selectCheckChangedList" resultMap="CheckChangedResult">
+        select r.dept_id,d.dept_name,sum(problems) problems,sum(`changed`) changed,min(r.create_time) create_time
+        from check_record r left join sys_dept d on r.dept_id = d.dept_id
+        group by r.dept_id
+    </select>
 </mapper>

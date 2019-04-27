@@ -7,6 +7,8 @@ import com.bd.system.domain.CheckRecord;
 import com.bd.system.domain.DeptShop;
 import com.bd.system.service.ICheckRecordService;
 import com.bd.system.service.IDeptShopService;
+import com.bd.system.vo.CheckChangedVO;
+import com.bd.system.vo.CheckNumVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +43,18 @@ public class CheckController extends BaseController {
         return checkRecords;
     }
 
+    @GetMapping("/month")
+    public List<CheckRecord> month(){
+
+
+
+        List<CheckRecord> checkRecords = checkRecordService.selectCheckRecordList(new  CheckRecord());
+        if(CollectionUtils.isEmpty(checkRecords)){
+            throw new BusinessException("暂无检查记录");
+        }
+        return checkRecords;
+    }
+
     @PostMapping("/config")
     public AjaxResult config(DeptShop deptShop){
 
@@ -48,17 +62,19 @@ public class CheckController extends BaseController {
     }
 
     @GetMapping("/getCheckNum/{deptId}/{shopId}")
-    public Integer getCheckNum(@PathVariable("deptId") Integer deptId,@PathVariable("shopId") Integer shopId){
+    public CheckNumVO getCheckNum(@PathVariable("deptId") Integer deptId, @PathVariable("shopId") Integer shopId){
         DeptShop deptShop = new DeptShop();
         deptShop.setDeptId(deptId);
         deptShop.setShopId(shopId);
         List<DeptShop> deptShops = deptShopService.selectDeptShopList(deptShop);
-
+        CheckNumVO vo = new CheckNumVO();
         if(CollectionUtils.isEmpty(deptShops)){
-            return 0;
+            vo.setCheckNum(0);
+        }else{
+            vo.setCheckNum(deptShops.get(0).getCheckNum());
         }
-        return deptShops.get(0).getCheckNum() ;
 
+        return vo ;
     }
 
     /*@PostMapping("/create")
@@ -80,6 +96,11 @@ public class CheckController extends BaseController {
         return checkRecordService.selectCheckRecordList(record);
 
 
+    }
+
+    @GetMapping("/changed")
+    public List<CheckChangedVO> changed(){
+        return checkRecordService.selectCheckChangedList();
     }
 
 }

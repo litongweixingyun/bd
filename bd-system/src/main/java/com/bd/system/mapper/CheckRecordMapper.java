@@ -1,6 +1,7 @@
 package com.bd.system.mapper;
 
 import com.bd.system.domain.CheckRecord;
+import com.bd.system.vo.CheckChangedVO;
 import com.bd.system.vo.CheckHistoryVO;
 import com.bd.system.vo.CheckRecordResultVO;
 import org.apache.ibatis.annotations.Param;
@@ -70,4 +71,6 @@ public interface CheckRecordMapper
     void updateCheckRecordById(@Param("checkRecordId") Integer checkRecordId,@Param("score") Integer score);
 
 	List<CheckRecord> selectCheckRecordHistory(CheckHistoryVO vo);
+
+    List<CheckChangedVO> selectCheckChangedList();
 }

@@ -3,12 +3,16 @@ package com.bd.system.service.impl;
 import com.bd.common.core.text.Convert;
 import com.bd.system.domain.CheckRecord;
 import com.bd.system.mapper.CheckRecordMapper;
+import com.bd.system.mapper.DeptShopMapper;
 import com.bd.system.service.ICheckRecordService;
+import com.bd.system.vo.CheckChangedVO;
 import com.bd.system.vo.CheckHistoryVO;
 import com.bd.system.vo.CheckRecordResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,6 +26,8 @@ public class CheckRecordServiceImpl implements ICheckRecordService
 {
 	@Autowired
 	private CheckRecordMapper checkRecordMapper;
+	@Resource
+	private DeptShopMapper deptShopMapper;
 
 	/**
      * 查询检查记录信息
@@ -54,8 +60,11 @@ public class CheckRecordServiceImpl implements ICheckRecordService
      * @return 结果
      */
 	@Override
+	@Transactional
 	public int insertCheckRecord(CheckRecord checkRecord)
 	{
+
+		deptShopMapper.updateCheckNum(checkRecord.getDeptId(),checkRecord.getShopId());
 	    return checkRecordMapper.insertCheckRecord(checkRecord);
 	}
 	
@@ -96,6 +105,11 @@ public class CheckRecordServiceImpl implements ICheckRecordService
 	@Override
 	public List<CheckRecord> selectCheckRecordHistory(CheckHistoryVO vo) {
 		return checkRecordMapper.selectCheckRecordHistory(vo);
+	}
+
+	@Override
+	public List<CheckChangedVO> selectCheckChangedList() {
+		return checkRecordMapper.selectCheckChangedList();
 	}
 
 }

@@ -1,7 +1,9 @@
 package com.bd.system.mapper;
 
 import com.bd.system.domain.DeptShop;
-import java.util.List;	
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 巡店配置 数据层
@@ -58,5 +60,6 @@ public interface DeptShopMapper
      * @return 结果
      */
 	public int deleteDeptShopByIds(String[] deptIds);
-	
+
+	int updateCheckNum(@Param("deptId") Integer deptId, @Param("shopId")Integer shopId);
 }
