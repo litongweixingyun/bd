@@ -41,6 +41,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </where>
     </select>
     
+    <select id="selectCheckProblemConfigById2" parameterType="Integer" resultMap="CheckProblemConfigResult">
+       select *
+        from check_problem_config cpc
+        where cpc.problem_config_id = #{problemConfigId}
+    </select>
+
     <select id="selectCheckProblemConfigById" parameterType="Integer" resultMap="CheckProblemConfigResult">
         <include refid="selectCheckProblemConfigVo"/>
         where problem_config_id = #{problemConfigId}
@@ -96,10 +102,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="raction"    column="raction"    />
         <result property="problemItemId"    column="problem_item_id"    />
         <result property="problemName"    column="problem_name"    />
+        <result property="problemConfigId"    column="problem_config_id"    />
     </resultMap>
     <select id="selectCheckProblemConfig" resultMap="ProblemResult">
         SELECT
-            cpi.problem_item_id,cp.problem_name,cpc.percent,cpc.raction
+            cpi.problem_item_id,cp.problem_name,cpc.percent,cpc.raction,cpc.problem_config_id
         FROM
             check_problem_config cpc
             LEFT JOIN check_problem cp ON cpc.problem_id = cp.problem_id

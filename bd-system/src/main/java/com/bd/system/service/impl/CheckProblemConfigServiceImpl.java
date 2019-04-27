@@ -1,6 +1,8 @@
 package com.bd.system.service.impl;
 
 import java.util.List;
+
+import com.bd.system.vo.ProblemVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bd.system.mapper.CheckProblemConfigMapper;
@@ -81,7 +83,7 @@ public class CheckProblemConfigServiceImpl implements ICheckProblemConfigService
 	}
 
 	@Override
-	public List<CheckProblemConfig> selectCheckProblemConfig(Long deptId, Long itemId, Long subItemId) {
+	public List<ProblemVO> selectCheckProblemConfig(Long deptId, Long itemId, Long subItemId) {
 		return checkProblemConfigMapper.selectCheckProblemConfig( deptId,  itemId,  subItemId);
 	}
 

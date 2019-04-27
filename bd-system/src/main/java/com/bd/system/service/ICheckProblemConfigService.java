@@ -1,6 +1,8 @@
 package com.bd.system.service;
 
 import com.bd.system.domain.CheckProblemConfig;
+import com.bd.system.vo.ProblemVO;
+
 import java.util.List;
 
 /**
@@ -51,6 +53,6 @@ public interface ICheckProblemConfigService
      */
 	public int deleteCheckProblemConfigByIds(String ids);
 
-	List<CheckProblemConfig> selectCheckProblemConfig(Long deptId, Long itemId, Long subItemId);
+	List<ProblemVO> selectCheckProblemConfig(Long deptId, Long itemId, Long subItemId);
     
 }

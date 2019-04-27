@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -57,6 +58,10 @@ public class MCheckRecordController extends BaseController
 	public AjaxResult create(CheckRecordVO vo){
 		Integer deptId = vo.getDeptId();
 		Integer shopId = vo.getShopId();
+
+		if(deptId == null || shopId == null){
+			return error(500,"请求参数错误");
+		}
 		String dateToStr = DateUtils.parseDateToStr("yyyy-MM", new Date());
 		int count = checkRecordService.selectCount(deptId,shopId,dateToStr);
 
@@ -145,7 +150,7 @@ public class MCheckRecordController extends BaseController
 	 * ]
 	 */
 	@PostMapping("/history")
-	public List<CheckRecord> history(CheckHistoryVO vo){
+	public List<CheckRecord> history(@Valid CheckHistoryVO vo){
 		return checkRecordService.selectCheckRecordHistory(vo);
 	}
 }

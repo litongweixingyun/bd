@@ -1,9 +1,12 @@
 package com.bd.system.domain;
 
+import com.bd.system.vo.ProblemDetailVO;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.bd.common.core.domain.BaseEntity;
+
+import java.util.List;
 
 /**
  * 巡店问题配置表 check_problem_config
@@ -36,4 +39,6 @@ public class CheckProblemConfig extends BaseEntity
 
 	private String deptName;
 	private String problemName;
+
+	private List<ProblemDetailVO> voList;
 }

@@ -1,6 +1,7 @@
 package com.bd.system.service.impl;
 
 import com.bd.common.core.text.Convert;
+import com.bd.common.exception.GlobalException;
 import com.bd.system.domain.CheckProblemConfig;
 import com.bd.system.domain.CheckProblemItem;
 import com.bd.system.domain.CheckProblemSubItem;
@@ -100,7 +101,11 @@ public class CheckProblemSubItemServiceImpl implements ICheckProblemSubItemServi
 	@Transactional
 	public boolean insert(CheckProblemItemVO vo) {
 		Integer problemConfigId = vo.getProblemConfigId();
-		CheckProblemConfig checkProblemConfig = checkProblemConfigMapper.selectCheckProblemConfigById(problemConfigId);
+		CheckProblemConfig checkProblemConfig = checkProblemConfigMapper.selectCheckProblemConfigById2(problemConfigId);
+
+		if(checkProblemConfig == null){
+			throw new GlobalException("未查询到对应配置");
+		}
 
 		Integer raction = checkProblemConfig.getRaction();
 		CheckProblemItem item = new CheckProblemItem();

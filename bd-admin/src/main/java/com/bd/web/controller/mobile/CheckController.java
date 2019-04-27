@@ -33,12 +33,12 @@ public class CheckController extends BaseController {
     private IDeptShopService deptShopService ;
 
     @GetMapping("/index")
-    public CheckRecord index(){
+    public List<CheckRecord> index(){
         List<CheckRecord> checkRecords = checkRecordService.selectCheckRecordList(new  CheckRecord());
         if(CollectionUtils.isEmpty(checkRecords)){
             throw new BusinessException("暂无检查记录");
         }
-        return checkRecords.get(0);
+        return checkRecords;
     }
 
     @PostMapping("/config")

@@ -2,6 +2,8 @@ package com.bd.system.vo;
 
 import lombok.Data;
 
+import java.util.List;
+
 
 /**
  * @author luxuewei
@@ -9,9 +11,12 @@ import lombok.Data;
  */
 @Data
 public class ProblemVO {
-     private Long problemItemId ;
+     private String problemItemId ;
      private String problemName ;
      private Long percent ;
      private Long raction ;
+     private Long problemConfigId ;
+
+     private List<ProblemDetailVO> voList;
 
 }
