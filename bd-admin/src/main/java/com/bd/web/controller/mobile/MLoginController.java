@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 @Slf4j
 @RestController
 @RequestMapping("/mobile/sys")
-public class LoginController extends BaseController {
+public class MLoginController extends BaseController {
 
     @Resource
     private ISysUserService userService;

@@ -27,7 +27,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/mobile/home")
-public class HomeController extends BaseController {
+public class MHomeController extends BaseController {
     @Resource
     private ISysNoticeService noticeService;
     @Resource

@@ -27,7 +27,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/mobile/check")
-public class CheckController extends BaseController {
+public class MCheckController extends BaseController {
 
     @Resource
     private ICheckRecordService checkRecordService;
