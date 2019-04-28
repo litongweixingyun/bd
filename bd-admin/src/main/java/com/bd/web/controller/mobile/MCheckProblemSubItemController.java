@@ -2,6 +2,7 @@ package com.bd.web.controller.mobile;
 
 import com.bd.common.core.controller.BaseController;
 import com.bd.common.core.domain.AjaxResult;
+import com.bd.common.utils.DateUtils;
 import com.bd.system.domain.CheckProblemSubItem;
 import com.bd.system.service.ICheckProblemItemService;
 import com.bd.system.service.ICheckProblemSubItemService;
@@ -77,4 +78,11 @@ public class MCheckProblemSubItemController extends BaseController
 		return vos;
 
 	}
+
+	@GetMapping("/changed/list/{deptId}/{shopId}/{status}")
+    public List changedList(@PathVariable("deptId")  Integer deptId ,@PathVariable("shopId")  Integer shopId,@PathVariable("status")  Integer status){
+        String checkDate = DateUtils.dateTimeNow("yyyy-MM");
+        return checkProblemSubItemService.selectChangedList(deptId,shopId,status,checkDate);
+    }
+
 }

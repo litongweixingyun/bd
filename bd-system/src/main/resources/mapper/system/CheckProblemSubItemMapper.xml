@@ -11,10 +11,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="picUrl"    column="pic_url"    />
         <result property="description"    column="description"    />
         <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+        <result property="changedTime"    column="changed_time"    />
+        <result property="changedPicUrl"    column="changed_pic_url"    />
     </resultMap>
 	
 	<sql id="selectCheckProblemSubItemVo">
-        select problem_sub_item_id, problem_item_id, score, pic_url, description, create_time from check_problem_sub_Item
+        select problem_sub_item_id, problem_item_id, score, pic_url, description, create_time,status,changed_time,changed_pic_url from
+        check_problem_sub_Item
     </sql>
 	
     <select id="selectCheckProblemSubItemList" parameterType="CheckProblemSubItem" resultMap="CheckProblemSubItemResult">
@@ -33,7 +37,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectCheckProblemSubItemVo"/>
         where problem_sub_item_id = #{problemSubItemId}
     </select>
-        
+
+
     <insert id="insertCheckProblemSubItem" parameterType="CheckProblemSubItem" useGeneratedKeys="true" keyProperty="problemSubItemId">
         insert into check_problem_sub_Item
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -74,5 +79,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{problemSubItemId}
         </foreach>
     </delete>
-    
+
+    <select id="selectChangedList" resultMap="CheckProblemSubItemResult">
+        SELECT
+	    cpsi.description,cpsi.create_time,cpsi.pic_url
+        FROM
+            check_problem_sub_Item cpsi
+        LEFT JOIN check_problem_Item cpi ON cpi.problem_item_id = cpsi.problem_item_id
+        LEFT JOIN check_record cr ON cpi.check_record_id = cr.check_record_id
+
+        WHERE
+            cpi.dept_id = #{deptId}
+        AND cpi.shop_id = #{shopId}
+        AND cpsi.create_time like concat(#{checkDate}, '%')
+        and cpsi.status = #{status}
+    </select>
+
 </mapper>

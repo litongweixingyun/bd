@@ -33,5 +33,11 @@ public class CheckProblemSubItem extends BaseEntity
 
 	private String problemName ;
 
+	private Integer status;
+
+	private Date changedTime;
+
+	private String changedPicUrl;
+
 
 }

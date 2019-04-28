@@ -55,4 +55,5 @@ public interface ICheckProblemSubItemService
 
     boolean insert(CheckProblemItemVO vo);
 
+    List selectChangedList(Integer deptId,Integer shopId,Integer status,String checkDate);
 }

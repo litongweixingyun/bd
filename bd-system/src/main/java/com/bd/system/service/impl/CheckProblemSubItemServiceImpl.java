@@ -140,5 +140,10 @@ public class CheckProblemSubItemServiceImpl implements ICheckProblemSubItemServi
 		return checkProblemSubItemMapper.insertCheckProblemSubItem(subItem) > 0;
 	}
 
+	@Override
+	public List selectChangedList(Integer deptId, Integer shopId, Integer status,String checkDate) {
+		return checkProblemSubItemMapper.selectChangedList(deptId,  shopId,  status, checkDate);
+	}
+
 
 }
