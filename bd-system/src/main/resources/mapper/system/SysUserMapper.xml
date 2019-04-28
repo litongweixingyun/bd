@@ -107,7 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectUserByPhoneNumber" parameterType="String" resultMap="SysUserResult">
 		<include refid="selectUserVo"/>
-		where u.phonenumber = #{phonenumber}
+		where u.phonenumber = #{phonenumber} LIMIT 1
 	</select>
 	
 	<select id="selectUserByEmail" parameterType="String" resultMap="SysUserResult">

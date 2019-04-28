@@ -3,6 +3,7 @@ package com.bd.system.service;
 import com.bd.system.domain.CheckProblemSubItem;
 import com.bd.system.vo.CheckProblemItemVO;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -53,6 +54,7 @@ public interface ICheckProblemSubItemService
      */
 	public int deleteCheckProblemSubItemByIds(String ids);
 
-    boolean insert(CheckProblemItemVO vo);
+	boolean insert(CheckProblemItemVO vo) throws IOException;
 
+    List selectChangedList(Integer deptId,Integer shopId,Integer status,String checkDate);
 }

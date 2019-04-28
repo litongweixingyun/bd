@@ -2,6 +2,7 @@ package com.bd.web.controller.mobile;
 
 import com.bd.common.core.controller.BaseController;
 import com.bd.common.core.domain.AjaxResult;
+import com.bd.common.utils.DateUtils;
 import com.bd.system.domain.CheckProblemSubItem;
 import com.bd.system.service.ICheckProblemItemService;
 import com.bd.system.service.ICheckProblemSubItemService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -43,9 +45,14 @@ public class MCheckProblemSubItemController extends BaseController
 	@PostMapping("/addProblems")
 	public AjaxResult save(@Valid CheckProblemItemVO vo){
 
-		boolean flag = checkProblemSubItemService.insert(vo);
+        boolean flag = false;
+        try {
+            flag = checkProblemSubItemService.insert(vo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		return toAjax(flag);
+        return toAjax(flag);
 	}
 
 
@@ -77,4 +84,11 @@ public class MCheckProblemSubItemController extends BaseController
 		return vos;
 
 	}
+
+	@GetMapping("/changed/list/{deptId}/{shopId}/{status}")
+    public List changedList(@PathVariable("deptId")  Integer deptId ,@PathVariable("shopId")  Integer shopId,@PathVariable("status")  Integer status){
+        String checkDate = DateUtils.dateTimeNow("yyyy-MM");
+        return checkProblemSubItemService.selectChangedList(deptId,shopId,status,checkDate);
+    }
+
 }

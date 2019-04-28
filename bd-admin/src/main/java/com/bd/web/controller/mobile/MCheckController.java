@@ -98,9 +98,9 @@ public class MCheckController extends BaseController {
 
     }
 
-    @GetMapping("/changed")
+    /*@GetMapping("/changed")
     public List<CheckChangedVO> changed(){
         return checkRecordService.selectCheckChangedList();
     }
-
+*/
 }

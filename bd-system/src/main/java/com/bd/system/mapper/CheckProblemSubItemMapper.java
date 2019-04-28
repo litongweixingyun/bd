@@ -1,7 +1,9 @@
 package com.bd.system.mapper;
 
 import com.bd.system.domain.CheckProblemSubItem;
-import java.util.List;	
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 巡店明细问题 数据层
@@ -59,4 +61,5 @@ public interface CheckProblemSubItemMapper
      */
 	public int deleteCheckProblemSubItemByIds(String[] problemSubItemIds);
 
+    List selectChangedList(@Param("deptId") Integer deptId, @Param("shopId")Integer shopId, @Param("status")Integer status, @Param("checkDate")String checkDate);
 }

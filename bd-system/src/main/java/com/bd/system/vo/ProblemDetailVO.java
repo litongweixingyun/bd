@@ -1,7 +1,7 @@
 package com.bd.system.vo;
 
-import lombok.Data;
 
+import lombok.Data;
 
 /**
  * @author luxuewei

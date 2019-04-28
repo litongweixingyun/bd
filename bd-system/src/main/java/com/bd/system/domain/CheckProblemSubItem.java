@@ -1,9 +1,7 @@
 package com.bd.system.domain;
 
-import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.bd.common.core.domain.BaseEntity;
+import lombok.Data;
 
 import java.util.Date;
 
@@ -32,6 +30,13 @@ public class CheckProblemSubItem extends BaseEntity
 	private Date createTime;
 
 	private String problemName ;
+
+	private Integer status;
+
+	private Date changedTime;
+
+	private String changedPicUrl;
+
 
 
 }

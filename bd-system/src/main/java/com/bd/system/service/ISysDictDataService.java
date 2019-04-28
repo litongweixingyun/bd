@@ -75,4 +75,6 @@ public interface ISysDictDataService
      * @return 结果
      */
     public int updateDictData(SysDictData dictData);
+
+    List<SysDictData> selectDictDataList1(SysDictData dictData);
 }

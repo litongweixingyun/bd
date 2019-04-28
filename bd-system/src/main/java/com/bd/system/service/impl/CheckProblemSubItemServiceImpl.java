@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -99,7 +100,9 @@ public class CheckProblemSubItemServiceImpl implements ICheckProblemSubItemServi
 
 	@Override
 	@Transactional
-	public boolean insert(CheckProblemItemVO vo) {
+	public boolean insert(CheckProblemItemVO vo)throws IOException {
+		/*String url= FileUploadUtils.upload(file);
+		System.out.println(url);*/
 		Integer problemConfigId = vo.getProblemConfigId();
 		CheckProblemConfig checkProblemConfig = checkProblemConfigMapper.selectCheckProblemConfigById2(problemConfigId);
 
@@ -138,6 +141,11 @@ public class CheckProblemSubItemServiceImpl implements ICheckProblemSubItemServi
 		subItem.setScore(-raction);
 		subItem.setCreateTime(new Date());
 		return checkProblemSubItemMapper.insertCheckProblemSubItem(subItem) > 0;
+	}
+
+	@Override
+	public List selectChangedList(Integer deptId, Integer shopId, Integer status,String checkDate) {
+		return checkProblemSubItemMapper.selectChangedList(deptId,  shopId,  status, checkDate);
 	}
 
 

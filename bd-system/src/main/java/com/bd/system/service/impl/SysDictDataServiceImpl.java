@@ -116,4 +116,9 @@ public class SysDictDataServiceImpl implements ISysDictDataService
     {
         return dictDataMapper.updateDictData(dictData);
     }
+
+    @Override
+    public List<SysDictData> selectDictDataList1(SysDictData dictData) {
+        return dictDataMapper.selectDictDataList1(dictData);
+    }
 }

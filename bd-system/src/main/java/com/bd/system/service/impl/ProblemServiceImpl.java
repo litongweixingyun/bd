@@ -1,12 +1,13 @@
 package com.bd.system.service.impl;
 
-import java.util.List;
+import com.bd.common.core.text.Convert;
+import com.bd.system.domain.Problem;
+import com.bd.system.mapper.ProblemMapper;
+import com.bd.system.service.IProblemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.bd.system.mapper.ProblemMapper;
-import com.bd.system.domain.Problem;
-import com.bd.system.service.IProblemService;
-import com.bd.common.core.text.Convert;
+
+import java.util.List;
 
 /**
  * 检查问题 服务层实现
