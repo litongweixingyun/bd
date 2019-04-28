@@ -121,7 +121,10 @@ xss:
   excludes: /system/notice/*
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
-
-
+#ftp:
+  #address: 39.96.218.102
+  #port: 21
+  #username: bd_ftp
+  #password: c6j2Gpbe8XJ4rA5m
 
 

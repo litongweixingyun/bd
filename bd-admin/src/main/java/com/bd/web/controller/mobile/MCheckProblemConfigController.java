@@ -1,14 +1,11 @@
 package com.bd.web.controller.mobile;
 
 import com.bd.common.core.controller.BaseController;
-import com.bd.system.domain.CheckProblemConfig;
 import com.bd.system.domain.CheckProblemSubItem;
 import com.bd.system.service.*;
-import com.bd.system.service.impl.CheckProblemSubItemServiceImpl;
 import com.bd.system.vo.ProblemDetailVO;
 import com.bd.system.vo.ProblemVO;
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
@@ -18,9 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 
 /**
