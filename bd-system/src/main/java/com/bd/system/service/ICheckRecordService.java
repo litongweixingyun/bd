@@ -4,6 +4,7 @@ import com.bd.system.domain.CheckRecord;
 import com.bd.system.vo.CheckChangedVO;
 import com.bd.system.vo.CheckHistoryVO;
 import com.bd.system.vo.CheckRecordResultVO;
+import com.bd.system.vo.NumVO;
 
 import java.util.List;
 
@@ -62,4 +63,6 @@ public interface ICheckRecordService
     List<CheckRecord> selectCheckRecordHistory(CheckHistoryVO vo);
 
     List<CheckChangedVO> selectCheckChangedList();
+
+	NumVO selectNum(Integer shopId);
 }

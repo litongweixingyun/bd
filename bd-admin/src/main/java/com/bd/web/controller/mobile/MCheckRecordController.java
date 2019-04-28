@@ -14,6 +14,7 @@ import com.bd.system.vo.CheckHistoryVO;
 import com.bd.system.vo.CheckRecordResultDetailVO;
 import com.bd.system.vo.CheckRecordResultVO;
 import com.bd.system.vo.CheckRecordVO;
+import com.bd.system.vo.NumVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -168,5 +169,10 @@ public class MCheckRecordController extends BaseController
 	@PostMapping("/history")
 	public List<CheckRecord> history(@Valid CheckHistoryVO vo){
 		return checkRecordService.selectCheckRecordHistory(vo);
+	}
+
+	@GetMapping("/num/{shopId}")
+	public NumVO num(@PathVariable("shopId") Integer shopId){
+		return checkRecordService.selectNum(shopId);
 	}
 }

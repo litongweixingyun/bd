@@ -155,4 +155,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from check_record r left join sys_dept d on r.dept_id = d.dept_id
         group by r.dept_id
     </select>
+
+    <resultMap type="com.bd.system.vo.NumVO" id="NumResult">
+        <result property="shopId"    column="shop_id"    />
+        <result property="shopName"    column="shop_name"    />
+        <result property="problems"    column="problems"    />
+        <result property="changed"    column="changed"    />
+
+    </resultMap>
+    <select id="selectNum" resultMap="NumResult">
+
+        SELECT
+            r.shop_id,s.shop_name,  sum(problems) problems ,sum(`changed`) changed
+        FROM
+            check_record r
+            left join sys_shop s on r.shop_id = s.shop_id
+        WHERE
+            r.shop_id = #{shopId}
+            group by r.shop_id
+
+    </select>
 </mapper>
