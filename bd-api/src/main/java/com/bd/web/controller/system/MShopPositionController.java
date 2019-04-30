@@ -1,11 +1,10 @@
-package com.bd.web.controller.mobile;
+package com.bd.web.controller.system;
 
 import com.bd.common.core.controller.BaseController;
 import com.bd.common.core.domain.AjaxResult;
 import com.bd.common.exception.base.BaseException;
 import com.bd.system.domain.ShopPosition;
 import com.bd.system.service.IShopPositionService;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.PostMapping;

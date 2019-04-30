@@ -1,4 +1,4 @@
-package com.bd.web.controller.mobile;
+package com.bd.web.controller.check;
 
 
 import com.bd.common.core.controller.BaseController;
@@ -10,18 +10,10 @@ import com.bd.system.domain.DeptShop;
 import com.bd.system.service.ICheckProblemItemService;
 import com.bd.system.service.ICheckRecordService;
 import com.bd.system.service.IDeptShopService;
-import com.bd.system.vo.CheckHistoryVO;
-import com.bd.system.vo.CheckRecordResultDetailVO;
-import com.bd.system.vo.CheckRecordResultVO;
-import com.bd.system.vo.CheckRecordVO;
-import com.bd.system.vo.NumVO;
+import com.bd.system.vo.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Date;

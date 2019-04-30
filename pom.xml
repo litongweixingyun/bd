@@ -14,6 +14,7 @@
         <module>bd-system</module>
         <module>bd-admin</module>
         <module>bd-generator</module>
+        <module>bd-api</module>
     </modules>
     <properties>
         <bd.version>1.0</bd.version>

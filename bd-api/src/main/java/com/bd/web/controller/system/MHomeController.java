@@ -1,20 +1,15 @@
-package com.bd.web.controller.mobile;
+package com.bd.web.controller.system;
 
 import com.bd.common.core.controller.BaseController;
-import com.bd.common.core.domain.AjaxResult;
 import com.bd.common.exception.GlobalException;
-import com.bd.common.utils.UUIDUtil;
 import com.bd.framework.shiro.service.SysPasswordService;
 import com.bd.system.domain.SysNotice;
 import com.bd.system.domain.SysUser;
-import com.bd.system.service.IShopPositionService;
 import com.bd.system.service.ISysNoticeService;
 import com.bd.system.service.ISysUserService;
 import com.bd.system.vo.LoginVO;
 import com.google.common.collect.Lists;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.credential.PasswordService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

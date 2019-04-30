@@ -1,4 +1,4 @@
-package com.bd.web.controller.mobile;
+package com.bd.web.controller.system;
 
 import com.bd.common.core.controller.BaseController;
 import com.bd.common.core.domain.AjaxResult;
