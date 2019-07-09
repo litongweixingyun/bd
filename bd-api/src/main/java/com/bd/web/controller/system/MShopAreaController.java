@@ -1,19 +1,15 @@
-package com.bd.web.controller.mobile;
+package com.bd.web.controller.system;
 
-import java.util.List;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-import com.bd.common.annotation.Log;
-import com.bd.common.enums.BusinessType;
+import com.bd.common.core.controller.BaseController;
 import com.bd.system.domain.ShopArea;
 import com.bd.system.service.IShopAreaService;
-import com.bd.common.core.controller.BaseController;
-import com.bd.common.core.page.TableDataInfo;
-import com.bd.common.core.domain.AjaxResult;
-import com.bd.common.utils.poi.ExcelUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 店铺区域 信息操作处理

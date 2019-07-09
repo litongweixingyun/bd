@@ -1,11 +1,12 @@
-package com.bd.web.controller.mobile;
+package com.bd.web.controller.system;
 
 import com.bd.common.core.controller.BaseController;
-import com.bd.common.core.page.TableDataInfo;
 import com.bd.system.domain.Shop;
 import com.bd.system.service.IShopService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -29,17 +30,15 @@ public class MShopController extends BaseController
 	 */
 	@GetMapping("/info/{shopId}")
 	public Shop info(@PathVariable("shopId") Integer shopId) {
-		Shop shop = shopService.selectShopById(shopId);
-	    return shop;
+		return shopService.selectShopById(shopId);
 	}
 
 	/**
 	 * 查询店铺列表
 	 */
 	@GetMapping("/list")
-	public List<Shop> list(Shop shop) {
-		List<Shop> shopList = shopService.selectShopList(shop);
-		return shopList;
+	public List<Shop> list() {
+		return shopService.selectShopList(new Shop());
 	}
 
 }

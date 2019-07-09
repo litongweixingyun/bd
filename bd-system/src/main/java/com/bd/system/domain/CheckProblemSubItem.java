@@ -38,5 +38,4 @@ public class CheckProblemSubItem extends BaseEntity
 	private String changedPicUrl;
 
 
-
 }

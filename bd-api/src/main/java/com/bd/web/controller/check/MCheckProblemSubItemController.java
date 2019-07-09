@@ -1,4 +1,4 @@
-package com.bd.web.controller.mobile;
+package com.bd.web.controller.check;
 
 import com.bd.common.core.controller.BaseController;
 import com.bd.common.core.domain.AjaxResult;
@@ -11,11 +11,7 @@ import com.bd.system.vo.ProblemDetailVO;
 import com.google.common.collect.Lists;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;

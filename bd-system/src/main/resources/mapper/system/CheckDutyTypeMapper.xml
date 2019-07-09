@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bd.system.mapper.CheckDutyTypeMapper">
+    
+    <resultMap type="CheckDutyType" id="CheckDutyTypeResult">
+        <result property="dctId"    column="dct_id"    />
+        <result property="dutyId"    column="duty_id"    />
+        <result property="pictuer"    column="pictuer"    />
+        <result property="score"    column="score"    />
+        <result property="dictCode"    column="dict_code"    />
+        <result property="dictCode1"    column="dict_code1"    />
+        <result property="dictCode2"    column="dict_code2"    />
+        <result property="dictLabel" column="dict_label"/>
+        <result property="dictLabel1" column="dict_label"/>
+        <result property="dictLabel2" column="dict_label"/>
+        <result property="dutyName" column="duty_name"/>
+    </resultMap>
+	
+	<sql id="selectCheckDutyTypeVo">
+    SELECT
+    cc.dct_id,
+    d.duty_name,
+    cc.pictuer,
+    cc.score,
+    sdd.dict_label,
+    sddd.dict_label,
+    sdddd.dict_label
+    FROM check_duty_type cc
+    LEFT JOIN check_duty d ON d.duty_id = cc.duty_id
+    LEFT JOIN sys_dict_data sdd ON sdd.dict_code = cc.dict_code AND sdd.dict_type = 'sys_shop_area'
+    LEFT JOIN sys_dict_data sddd ON sddd.dict_code = cc.dict_code1 AND sddd.dict_type = 'check_duty_area'
+    LEFT JOIN sys_dict_data sdddd ON sdddd.dict_code = cc.dict_code2 AND sdddd.dict_type= 'check_duty_pj'
+    </sql >
+    <select id="selectCheckDutyTypeList" parameterType="CheckDutyType" resultMap="CheckDutyTypeResult">
+        <include refid="selectCheckDutyTypeVo"/>
+        <where>
+            <if test="dctId != null "> and dct_id = #{dctId}</if>
+             <if test="dutyId != null "> and duty_id = #{dutyId}</if>
+             <if test="pictuer != null "> and pictuer = #{pictuer}</if>
+             <if test="score != null "> and score = #{score}</if>
+             <if test="dictCode != null "> and dict_code = #{dictCode}</if>
+             <if test="dictCode1 != null "> and dict_code1 = #{dictCode1}</if>
+             <if test="dictCode2 != null "> and dict_code2 = #{dictCode2}</if>
+         </where>
+    </select>
+    
+    <select id="selectCheckDutyTypeById" parameterType="Integer" resultMap="CheckDutyTypeResult">
+        <include refid="selectCheckDutyTypeVo"/>
+        where dct_id = #{dctId}
+    </select>
+        
+    <insert id="insertCheckDutyType" parameterType="CheckDutyType" useGeneratedKeys="true" keyProperty="dctId">
+        insert into check_duty_type
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="dutyId != null  ">duty_id,</if>
+			<if test="pictuer != null  and pictuer != ''  ">pictuer,</if>
+			<if test="score != null  ">score,</if>
+			<if test="dictCode != null  ">dict_code,</if>
+			<if test="dictCode1 != null  ">dict_code1,</if>
+			<if test="dictCode2 != null  ">dict_code2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="dutyId != null  ">#{dutyId},</if>
+			<if test="pictuer != null  and pictuer != ''  ">#{pictuer},</if>
+			<if test="score != null  ">#{score},</if>
+			<if test="dictCode != null  ">#{dictCode},</if>
+			<if test="dictCode1 != null  ">#{dictCode1},</if>
+			<if test="dictCode2 != null  ">#{dictCode2},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCheckDutyType" parameterType="CheckDutyType">
+        update check_duty_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dutyId != null  ">duty_id = #{dutyId},</if>
+            <if test="pictuer != null  and pictuer != ''  ">pictuer = #{pictuer},</if>
+            <if test="score != null  ">score = #{score},</if>
+            <if test="dictCode != null  ">dict_code = #{dictCode},</if>
+            <if test="dictCode1 != null  ">dict_code1 = #{dictCode1},</if>
+            <if test="dictCode2 != null  ">dict_code2 = #{dictCode2},</if>
+        </trim>
+        where dct_id = #{dctId}
+    </update>
+
+	<delete id="deleteCheckDutyTypeById" parameterType="Integer">
+        delete from check_duty_type where dct_id = #{dctId}
+    </delete>
+	
+    <delete id="deleteCheckDutyTypeByIds" parameterType="String">
+        delete from check_duty_type where dct_id in 
+        <foreach item="dctId" collection="array" open="(" separator="," close=")">
+            #{dctId}
+        </foreach>
+    </delete>
+    
+</mapper>

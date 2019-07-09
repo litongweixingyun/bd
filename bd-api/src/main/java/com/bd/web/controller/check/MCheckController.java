@@ -1,4 +1,4 @@
-package com.bd.web.controller.mobile;
+package com.bd.web.controller.check;
 
 import com.bd.common.core.controller.BaseController;
 import com.bd.common.core.domain.AjaxResult;
@@ -7,15 +7,10 @@ import com.bd.system.domain.CheckRecord;
 import com.bd.system.domain.DeptShop;
 import com.bd.system.service.ICheckRecordService;
 import com.bd.system.service.IDeptShopService;
-import com.bd.system.vo.CheckChangedVO;
 import com.bd.system.vo.CheckNumVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -45,8 +40,6 @@ public class MCheckController extends BaseController {
 
     @GetMapping("/month")
     public List<CheckRecord> month(){
-
-
 
         List<CheckRecord> checkRecords = checkRecordService.selectCheckRecordList(new  CheckRecord());
         if(CollectionUtils.isEmpty(checkRecords)){

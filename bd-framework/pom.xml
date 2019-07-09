@@ -68,11 +68,12 @@
         </dependency>
 
         <!-- 系统模块-->
+
         <dependency>
             <groupId>com.bd</groupId>
-            <artifactId>bd-system</artifactId>
-            <version>${bd.version}</version>
+            <artifactId>bd-common</artifactId>
         </dependency>
+
 
         <!-- 获取系统信息 -->
         <dependency>
@@ -88,6 +89,10 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.bd</groupId>
+            <artifactId>bd-system</artifactId>
         </dependency>
 
     </dependencies>
