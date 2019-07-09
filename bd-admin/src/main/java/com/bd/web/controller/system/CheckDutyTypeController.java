@@ -34,7 +34,7 @@ public class CheckDutyTypeController extends BaseController
 
 
 
-    //大萨达多放电饭煲梵蒂冈仍然的广泛地
+    //大萨达多放电饭煲梵蒂冈仍然的广泛地1大幅度发生
 	@Autowired
 	private ICheckDutyTypeService checkDutyTypeService;
 	@Autowired
