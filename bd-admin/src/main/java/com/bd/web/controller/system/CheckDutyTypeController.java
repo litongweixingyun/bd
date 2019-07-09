@@ -31,7 +31,10 @@ import java.util.List;
 public class CheckDutyTypeController extends BaseController
 {
     private String prefix = "system/checkDutyType";
-	
+
+
+
+    //大萨达多
 	@Autowired
 	private ICheckDutyTypeService checkDutyTypeService;
 	@Autowired
