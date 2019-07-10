@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="DeptShop" id="DeptShopResult">
         <result property="deptId"    column="dept_id"    />
         <result property="shopId"    column="shop_id"    />
+        <result property="dsId"    column="ds_id"    />
         <result property="month"    column="month"    />
         <result property="checkNum"    column="check_num"    />
         <result property="deptName"    column="dept_name"    />
@@ -14,16 +15,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectDeptShopVo">
-        select dept_id, shop_id, month, check_num from sys_dept_shop
+         select dept_id, shop_id, month, check_num, ds_id from sys_dept_shop
     </sql>
 	
     <select id="selectDeptShopList" parameterType="DeptShop" resultMap="DeptShopResult">
-        select ds.dept_id, ds.shop_id, ds.month, ds.check_num , (select dept_name from sys_dept where dept_id =
+        select ds.dept_id, ds.shop_id,ds.ds_id ,ds.month, ds.check_num , (select dept_name from sys_dept where dept_id =
         ds.dept_id) dept_name, (select shop_name from sys_shop where shop_id =
         ds.shop_id) shop_name
         from sys_dept_shop ds
         <where>  
             <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="dsId != null "> and ds_id = #{dsId}</if>
              <if test="shopId != null "> and shop_id = #{shopId}</if>
              <if test="month != null  and month != '' "> and month = #{month}</if>
              <if test="checkNum != null "> and check_num = #{checkNum}</if>
@@ -31,11 +33,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="selectDeptShopById" parameterType="Integer" resultMap="DeptShopResult">
-        select ds.dept_id, ds.shop_id, ds.month, ds.check_num , (select dept_name from sys_dept where dept_id =
+        select ds.dept_id, ds.ds_id, ds.shop_id, ds.month, ds.check_num , (select dept_name from sys_dept where dept_id =
         ds.dept_id) dept_name, (select shop_name from sys_shop where shop_id =
         ds.shop_id) shop_name
         from sys_dept_shop ds
-        where ds.dept_id = #{deptId}
+        where ds.ds_id = #{dsId}
     </select>
         
     <insert id="insertDeptShop" parameterType="DeptShop">
@@ -58,10 +60,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update sys_dept_shop
         <trim prefix="SET" suffixOverrides=",">
             <if test="shopId != null  ">shop_id = #{shopId},</if>
+            <if test="dsId != null  ">ds_id = #{dsId},</if>
             <if test="month != null  and month != ''  ">month = #{month},</if>
             <if test="checkNum != null  ">check_num = #{checkNum},</if>
         </trim>
-        where dept_id = #{deptId}
+        where ds_id = #{dsId}
     </update>
     <update id="updateCheckNum" parameterType="int">
         update sys_dept_shop set check_num = check_num - 1

@@ -1,12 +1,13 @@
 package com.bd.system.service.impl;
 
-import java.util.List;
+import com.bd.common.core.text.Convert;
+import com.bd.system.domain.DeptShop;
+import com.bd.system.mapper.DeptShopMapper;
+import com.bd.system.service.IDeptShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.bd.system.mapper.DeptShopMapper;
-import com.bd.system.domain.DeptShop;
-import com.bd.system.service.IDeptShopService;
-import com.bd.common.core.text.Convert;
+
+import java.util.List;
 
 /**
  * 巡店配置 服务层实现
@@ -23,13 +24,13 @@ public class DeptShopServiceImpl implements IDeptShopService
 	/**
      * 查询巡店配置信息
      * 
-     * @param deptId 巡店配置ID
+     * @param dsId 巡店配置ID
      * @return 巡店配置信息
      */
     @Override
-	public DeptShop selectDeptShopById(Integer deptId)
+	public DeptShop selectDeptShopById(Integer dsId)
 	{
-	    return deptShopMapper.selectDeptShopById(deptId);
+	    return deptShopMapper.selectDeptShopById(dsId);
 	}
 	
 	/**

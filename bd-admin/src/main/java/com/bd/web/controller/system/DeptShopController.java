@@ -1,33 +1,27 @@
 package com.bd.web.controller.system;
 
-import java.util.List;
-
+import com.bd.common.annotation.Log;
+import com.bd.common.core.controller.BaseController;
+import com.bd.common.core.domain.AjaxResult;
+import com.bd.common.core.page.TableDataInfo;
+import com.bd.common.enums.BusinessType;
 import com.bd.common.exception.BusinessException;
+import com.bd.common.utils.poi.ExcelUtil;
+import com.bd.system.domain.DeptShop;
 import com.bd.system.domain.Shop;
 import com.bd.system.domain.SysDept;
+import com.bd.system.service.IDeptShopService;
 import com.bd.system.service.IShopService;
 import com.bd.system.service.ISysDeptService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.bd.common.annotation.Log;
-import com.bd.common.enums.BusinessType;
-import com.bd.system.domain.DeptShop;
-import com.bd.system.service.IDeptShopService;
-import com.bd.common.core.controller.BaseController;
-import com.bd.common.core.page.TableDataInfo;
-import com.bd.common.core.domain.AjaxResult;
-import com.bd.common.utils.poi.ExcelUtil;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 巡店配置 信息操作处理
@@ -117,10 +111,10 @@ public class DeptShopController extends BaseController
 	/**
 	 * 修改巡店配置
 	 */
-	@GetMapping("/edit/{deptId}")
-	public String edit(@PathVariable("deptId") Integer deptId, ModelMap mmap)
+	@GetMapping("/edit/{dsId}")
+	public String edit(@PathVariable("dsId") Integer dsId, ModelMap mmap)
 	{
-		DeptShop deptShop = deptShopService.selectDeptShopById(deptId);
+		DeptShop deptShop = deptShopService.selectDeptShopById(dsId);
 
 		mmap.put("deptShop", deptShop);
 	    return prefix + "/edit";

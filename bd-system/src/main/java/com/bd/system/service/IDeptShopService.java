@@ -14,10 +14,10 @@ public interface IDeptShopService
 	/**
      * 查询巡店配置信息
      * 
-     * @param deptId 巡店配置ID
+     * @param dsId 巡店配置ID
      * @return 巡店配置信息
      */
-	public DeptShop selectDeptShopById(Integer deptId);
+	public DeptShop selectDeptShopById(Integer dsId);
 	
 	/**
      * 查询巡店配置列表
