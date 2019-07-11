@@ -11,43 +11,25 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								：<input type="text" name="deptId"/>
+								部门ID：<input type="text" name="deptId"/>
 							</li>
 
 							<li>
-								：<input type="text" name="shopId"/>
+								店铺ID：<input type="text" name="shopId"/>
 							</li>
 
 							<li>
-								：<input type="text" name="createBy"/>
+								检查者：<input type="text" name="createBy"/>
+							</li>
+							<li class="select-time">
+								<label>创建时间：</label>
+								<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+								<span>-</span>
+								<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
 							</li>
 
 							<li>
-								：<input type="text" name="createTime"/>
-							</li>
-
-							<li>
-								：<input type="text" name="status"/>
-							</li>
-
-							<li>
-								：<input type="text" name="completeTime"/>
-							</li>
-
-							<li>
-								：<input type="text" name="problems"/>
-							</li>
-
-							<li>
-								：<input type="text" name="changed"/>
-							</li>
-
-							<li>
-								：<input type="text" name="totalScore"/>
-							</li>
-
-							<li>
-								：<input type="text" name="checkNum"/>
+								得分：<input type="text" name="totalScore"/>
 							</li>
 
 							<li>
@@ -69,9 +51,6 @@
 				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:checkRecord:remove">
 					<i class="fa fa-remove"></i> 删除
 				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:checkRecord:export">
-						<i class="fa fa-download"></i> 导出
-				 </a>
 			</div>
 			<div class="col-sm-12 select-table table-striped">
 				<table id="bootstrap-table" data-mobile-responsive="true"></table>
@@ -98,57 +77,57 @@
 		        },
 				{
 					field : 'checkRecordId', 
-					title : '',
+					title : '检查记录ID',
 					visible: false
 				},
 				{
 					field : 'deptId', 
-					title : '',
+					title : '部门ID',
 					sortable: true
 				},
 				{
 					field : 'shopId', 
-					title : '',
+					title : '店铺ID',
 					sortable: true
 				},
 				{
 					field : 'createBy', 
-					title : '',
+					title : '检查者',
 					sortable: true
 				},
 				{
 					field : 'createTime', 
-					title : '',
+					title : '检查时间',
 					sortable: true
 				},
 				{
 					field : 'status', 
-					title : '',
+					title : '状态',
 					sortable: true
 				},
 				{
 					field : 'completeTime', 
-					title : '',
+					title : '完成时间',
 					sortable: true
 				},
 				{
 					field : 'problems', 
-					title : '',
+					title : '问题',
 					sortable: true
 				},
 				{
 					field : 'changed', 
-					title : '',
+					title : '整改后',
 					sortable: true
 				},
 				{
 					field : 'totalScore', 
-					title : '',
+					title : '得分',
 					sortable: true
 				},
 				{
 					field : 'checkNum', 
-					title : '',
+					title : '检查次数',
 					sortable: true
 				},
 		        {
