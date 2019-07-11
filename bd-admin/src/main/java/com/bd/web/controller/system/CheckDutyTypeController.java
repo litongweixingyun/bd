@@ -7,9 +7,8 @@ import com.bd.common.core.page.TableDataInfo;
 import com.bd.common.enums.BusinessType;
 import com.bd.common.utils.poi.ExcelUtil;
 import com.bd.system.domain.CheckDuty;
-import com.bd.system.domain.CheckDutyProblem;
 import com.bd.system.domain.CheckDutyType;
-import com.bd.system.service.ICheckDutyProblemService;
+import com.bd.system.domain.SysDictData;
 import com.bd.system.service.ICheckDutyService;
 import com.bd.system.service.ICheckDutyTypeService;
 import com.bd.system.service.ISysDictDataService;
@@ -23,16 +22,15 @@ import java.util.List;
 
 /**
  * 值班类型 信息操作处理
- * 
- * @author luxuewei
- * @date 2019-06-28
+ *
+ * @author yuanqingjian
+ * @date 2019-07-10
  */
 @Controller
 @RequestMapping("/system/checkDutyType")
 public class CheckDutyTypeController extends BaseController
 {
-    private String prefix = "system/checkDutyType";
-
+	private String prefix = "system/checkDutyType";
 
 	@Autowired
 	private ICheckDutyTypeService checkDutyTypeService;
@@ -40,15 +38,14 @@ public class CheckDutyTypeController extends BaseController
 	private ICheckDutyService checkDutyService;
 	@Autowired
 	private ISysDictDataService dictDateService;
-	@Autowired
-	private ICheckDutyProblemService checkDutyProblemService;
+
 	@RequiresPermissions("system:checkDutyType:view")
 	@GetMapping()
 	public String checkDutyType()
 	{
-	    return prefix + "/checkDutyType";
+		return prefix + "/checkDutyType";
 	}
-	
+
 	/**
 	 * 查询值班类型列表
 	 */
@@ -58,25 +55,25 @@ public class CheckDutyTypeController extends BaseController
 	public TableDataInfo list(CheckDutyType checkDutyType)
 	{
 		startPage();
-        List<CheckDutyType> list = checkDutyTypeService.selectCheckDutyTypeList(checkDutyType);
+		List<CheckDutyType> list = checkDutyTypeService.selectCheckDutyTypeList(checkDutyType);
 
-        return getDataTable(list);
+		return getDataTable(list);
 	}
-
 
 	/**
 	 * 导出值班类型列表
 	 */
+	@Log(title = "值班管理", businessType = BusinessType.EXPORT)
 	@RequiresPermissions("system:checkDutyType:export")
-    @PostMapping("/export")
-    @ResponseBody
-    public AjaxResult export(CheckDutyType checkDutyType)
-    {
-    	List<CheckDutyType> list = checkDutyTypeService.selectCheckDutyTypeList(checkDutyType);
-        ExcelUtil<CheckDutyType> util = new ExcelUtil<CheckDutyType>(CheckDutyType.class);
-        return util.exportExcel(list, "值班检查状况");
-    }
-	
+	@PostMapping("/export")
+	@ResponseBody
+	public AjaxResult export(CheckDutyType checkDutyType)
+	{
+		List<CheckDutyType> list = checkDutyTypeService.selectCheckDutyTypeList(checkDutyType);
+		ExcelUtil<CheckDutyType> util = new ExcelUtil<CheckDutyType>(CheckDutyType.class);
+		return util.exportExcel(list, "值班检查状况");
+	}
+
 	/**
 	 * 新增值班类型
 	 */
@@ -84,11 +81,9 @@ public class CheckDutyTypeController extends BaseController
 	public String add(ModelMap map)
 	{
 		map.put("dutys", checkDutyService.selectCheckDutyList(new CheckDuty()));
-        map.put("problems",checkDutyProblemService.selectCheckDutyProblemList(new CheckDutyProblem()));
-
 		return prefix + "/add";
 	}
-	
+
 	/**
 	 * 新增保存值班类型
 	 */
@@ -97,7 +92,7 @@ public class CheckDutyTypeController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(CheckDutyType checkDutyType)
-	{		
+	{
 		return toAjax(checkDutyTypeService.insertCheckDutyType(checkDutyType));
 	}
 
@@ -110,9 +105,9 @@ public class CheckDutyTypeController extends BaseController
 		CheckDutyType checkDutyType = checkDutyTypeService.selectCheckDutyTypeById(dctId);
 		mmap.put("checkDutyType", checkDutyType);
 		mmap.put("dutys", checkDutyService.selectCheckDutyList(new CheckDuty()));
-	    return prefix + "/edit";
+		return prefix + "/edit";
 	}
-	
+
 	/**
 	 * 修改保存值班类型
 	 */
@@ -121,20 +116,20 @@ public class CheckDutyTypeController extends BaseController
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(CheckDutyType checkDutyType)
-	{		
+	{
 		return toAjax(checkDutyTypeService.updateCheckDutyType(checkDutyType));
 	}
-	
+
 	/**
-	 * 删除值班类型
+	 * 批量删除值班类型
 	 */
 	@RequiresPermissions("system:checkDutyType:remove")
 	@Log(title = "值班类型", businessType = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
-	{		
+	{
 		return toAjax(checkDutyTypeService.deleteCheckDutyTypeByIds(ids));
 	}
-	
+
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bd.system.mapper.ScheduleMapper">
-    
+
     <resultMap type="Schedule" id="ScheduleResult">
         <result property="scheduleId"    column="schedule_id"    />
         <result property="shopId"    column="shop_id"    />
@@ -16,11 +16,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="userName"    column="user_name"    />
         <result property="positionName"    column="position_name"    />
     </resultMap>
-	
-	<sql id="selectScheduleVo">
+
+    <sql id="selectScheduleVo">
         select schedule_id, shop_id, position_id, user_id, schedule_area, start_time, end_time from schedule
     </sql>
-	
+
     <select id="selectScheduleList" parameterType="Schedule" resultMap="ScheduleResult">
         select s.schedule_id, s.shop_id, s.position_id, s.user_id, s.schedule_area, s.start_time, s.end_time,
         ss.shop_name,u.user_name,p.position_name
@@ -28,42 +28,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join sys_shop ss on s.shop_id = ss.shop_id
         left join sys_user u on s.user_id = u.user_id
         left join shop_position p on s.position_id = p.position_id
-        <where>  
+        <where>
             <if test="scheduleId != null "> and s.schedule_id = #{scheduleId}</if>
-             <if test="shopId != null "> and s.shop_id = #{shopId}</if>
-             <if test="positionId != null "> and s.position_id = #{positionId}</if>
-             <if test="userId != null "> and s.user_id = #{userId}</if>
-             <if test="scheduleArea != null  and scheduleArea != '' "> and s.schedule_area = #{scheduleArea}</if>
-             <if test="startTime != null "> and s.start_time = #{startTime}</if>
-             <if test="endTime != null "> and s.end_time = #{endTime}</if>
-         </where>
+            <if test="shopId != null "> and s.shop_id = #{shopId}</if>
+            <if test="positionId != null "> and s.position_id = #{positionId}</if>
+            <if test="userId != null "> and s.user_id = #{userId}</if>
+            <if test="scheduleArea != null  and scheduleArea != '' "> and s.schedule_area = #{scheduleArea}</if>
+            <if test="startTime != null "> and s.start_time = #{startTime}</if>
+            <if test="endTime != null "> and s.end_time = #{endTime}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(s.start_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(s.end_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
     </select>
-    
+
     <select id="selectScheduleById" parameterType="Integer" resultMap="ScheduleResult">
         <include refid="selectScheduleVo"/>
         where schedule_id = #{scheduleId}
     </select>
-        
+
     <insert id="insertSchedule" parameterType="Schedule" useGeneratedKeys="true" keyProperty="scheduleId">
         insert into schedule
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="shopId != null  ">shop_id,</if>
-			<if test="positionId != null  ">position_id,</if>
-			<if test="userId != null  ">user_id,</if>
-			<if test="scheduleArea != null  and scheduleArea != ''  ">schedule_area,</if>
-			<if test="startTime != null  ">start_time,</if>
-			<if test="endTime != null  ">end_time,</if>
-         </trim>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null  ">shop_id,</if>
+            <if test="positionId != null  ">position_id,</if>
+            <if test="userId != null  ">user_id,</if>
+            <if test="scheduleArea != null  and scheduleArea != ''  ">schedule_area,</if>
+            <if test="startTime != null  ">start_time,</if>
+            <if test="endTime != null  ">end_time,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="shopId != null  ">#{shopId},</if>
-			<if test="positionId != null  ">#{positionId},</if>
-			<if test="userId != null  ">#{userId},</if>
-			<if test="scheduleArea != null  and scheduleArea != ''  ">#{scheduleArea},</if>
-			<if test="startTime != null  ">#{startTime},</if>
-			<if test="endTime != null  ">#{endTime},</if>
-         </trim>
+            <if test="shopId != null  ">#{shopId},</if>
+            <if test="positionId != null  ">#{positionId},</if>
+            <if test="userId != null  ">#{userId},</if>
+            <if test="scheduleArea != null  and scheduleArea != ''  ">#{scheduleArea},</if>
+            <if test="startTime != null  ">#{startTime},</if>
+            <if test="endTime != null  ">#{endTime},</if>
+        </trim>
     </insert>
-	 
+
     <update id="updateSchedule" parameterType="Schedule">
         update schedule
         <trim prefix="SET" suffixOverrides=",">
@@ -77,15 +83,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where schedule_id = #{scheduleId}
     </update>
 
-	<delete id="deleteScheduleById" parameterType="Integer">
+    <delete id="deleteScheduleById" parameterType="Integer">
         delete from schedule where schedule_id = #{scheduleId}
     </delete>
-	
+
     <delete id="deleteScheduleByIds" parameterType="String">
-        delete from schedule where schedule_id in 
+        delete from schedule where schedule_id in
         <foreach item="scheduleId" collection="array" open="(" separator="," close=")">
             #{scheduleId}
         </foreach>
     </delete>
-    
+
 </mapper>

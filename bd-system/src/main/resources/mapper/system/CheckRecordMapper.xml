@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bd.system.mapper.CheckRecordMapper">
-    
+
     <resultMap type="CheckRecord" id="CheckRecordResult">
         <result property="checkRecordId"    column="check_record_id"    />
         <result property="deptId"    column="dept_id"    />
@@ -19,8 +19,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="deptName"    column="dept_name"    />
         <result property="shopName"    column="shop_name"    />
     </resultMap>
-	
-	<sql id="selectCheckRecordVo">
+
+    <!-- 查询检查记录-->
+    <sql id="selectCheckRecordVo">
         select cr.check_record_id, cr.dept_id, cr.shop_id, cr.create_by,
         cr.create_time, cr.status, cr.complete_time, cr.problems, cr.changed,
         cr.total_score, cr.check_num
@@ -29,57 +30,107 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join sys_dept sd on cr.dept_id = sd.dept_id
         left join sys_shop ss on cr.shop_id = ss.shop_id
     </sql>
-	
+
+    <!--查询检查记录列表-->
     <select id="selectCheckRecordList" parameterType="CheckRecord" resultMap="CheckRecordResult">
-        <include refid="selectCheckRecordVo"/>
-        <where>  
-            <if test="checkRecordId != null "> and check_record_id = #{checkRecordId}</if>
-             <if test="deptId != null "> and dept_id = #{deptId}</if>
-             <if test="shopId != null "> and shop_id = #{shopId}</if>
-             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
-             <if test="createTime != null "> and create_time = #{createTime}</if>
-             <if test="status != null "> and status = #{status}</if>
-             <if test="completeTime != null "> and complete_time = #{completeTime}</if>
-             <if test="problems != null "> and problems = #{problems}</if>
-             <if test="changed != null "> and changed = #{changed}</if>
-             <if test="totalScore != null "> and total_score = #{totalScore}</if>
-             <if test="checkNum != null "> and check_num = #{checkNum}</if>
-         </where>
+        <!--
+                <include refid="selectCheckRecordVo"/>-->
+
+        select cr.check_record_id, cr.dept_id, cr.shop_id, cr.create_by,
+        cr.create_time, cr.status, cr.complete_time, cr.problems, cr.changed,
+        cr.total_score, cr.check_num
+        ,sd.dept_name,ss.shop_name
+        from check_record cr
+        left join sys_dept sd on cr.dept_id = sd.dept_id
+        left join sys_shop ss on cr.shop_id = ss.shop_id
+        <where>
+            <if test="checkRecordId!=null and checkRecordId!=0"><!-- 检查记录ID -->
+                and  cr.check_record_id =#{checkRecordId}
+            </if>
+            <if test="deptId!=null and deptId!=0"><!-- 部门ID -->
+                and  cr.dept_id =#{deptId}
+            </if>
+            <if test="shopId!=null and shopId!=0"><!-- 店铺ID -->
+                and  cr.shop_id =#{shopId}
+            </if>
+            <if test="createBy!=null and createBy!=''"><!-- 创建者 -->
+                and  cr.create_by like concat('%', #{createBy}, '%')
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(cr.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(cr.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+
+
+            <if test="status!=null and status!=''">
+                and  cr.status =#{status}
+            </if>
+            <if test=" problems != null and problems!='' " >
+                and cr.problems = #{problems}
+            </if>
+            <if test="changed != null and changed !='' ">
+                and cr.changed = #{changed}
+            </if>
+            <if test="totalScore != null and totalScore !='' ">
+                and cr.total_score = #{totalScore}
+            </if>
+            <if test="checkNum != null and checkNum !='' ">
+                and cr.check_num = #{checkNum}
+            </if>
+        </where>
     </select>
-    
+    <!--
+            <where>
+                <if test="checkRecordId != null "> and check_record_id = #{checkRecordId}</if>
+                 <if test="deptId != null "> and dept_id = #{deptId}</if>
+                 <if test="shopId != null "> and shop_id = #{shopId}</if>
+                 <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+                 <if test="createTime != null "> and create_time = #{createTime}</if>
+                 <if test="status != null "> and status = #{status}</if>
+                 <if test="completeTime != null "> and complete_time = #{completeTime}</if>
+                 <if test="problems != null "> and problems = #{problems}</if>
+                 <if test="changed != null "> and changed = #{changed}</if>
+                 <if test="totalScore != null "> and total_score = #{totalScore}</if>
+                 <if test="checkNum != null "> and check_num = #{checkNum}</if>
+             </where>
+    -->
+    <!--根据ID查询查询记录-->
     <select id="selectCheckRecordById" parameterType="Integer" resultMap="CheckRecordResult">
         <include refid="selectCheckRecordVo"/>
-        where check_record_id = #{checkRecordId}
+        where cr.check_record_id = #{checkRecordId}
     </select>
-        
+
+    <!--新增查询记录 -->
     <insert id="insertCheckRecord" parameterType="CheckRecord" useGeneratedKeys="true" keyProperty="checkRecordId">
         insert into check_record
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="deptId != null  ">dept_id,</if>
-			<if test="shopId != null  ">shop_id,</if>
-			<if test="createBy != null  and createBy != ''  ">create_by,</if>
-			<if test="createTime != null  ">create_time,</if>
-			<if test="status != null  ">status,</if>
-			<if test="completeTime != null  ">complete_time,</if>
-			<if test="problems != null  ">problems,</if>
-			<if test="changed != null  ">changed,</if>
-			<if test="totalScore != null  ">total_score,</if>
-			<if test="checkNum != null  ">check_num,</if>
-         </trim>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deptId != null  ">dept_id,</if>
+            <if test="shopId != null  ">shop_id,</if>
+            <if test="createBy != null  and createBy != ''  ">create_by,</if>
+            <if test="createTime != null  ">create_time,</if>
+            <if test="status != null  ">status,</if>
+            <if test="completeTime != null  ">complete_time,</if>
+            <if test="problems != null  ">problems,</if>
+            <if test="changed != null  ">changed,</if>
+            <if test="totalScore != null  ">total_score,</if>
+            <if test="checkNum != null  ">check_num,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="deptId != null  ">#{deptId},</if>
-			<if test="shopId != null  ">#{shopId},</if>
-			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
-			<if test="createTime != null  ">#{createTime},</if>
-			<if test="status != null  ">#{status},</if>
-			<if test="completeTime != null  ">#{completeTime},</if>
-			<if test="problems != null  ">#{problems},</if>
-			<if test="changed != null  ">#{changed},</if>
-			<if test="totalScore != null  ">#{totalScore},</if>
-			<if test="checkNum != null  ">#{checkNum},</if>
-         </trim>
+            <if test="deptId != null  ">#{deptId},</if>
+            <if test="shopId != null  ">#{shopId},</if>
+            <if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+            <if test="createTime != null  ">#{createTime},</if>
+            <if test="status != null  ">#{status},</if>
+            <if test="completeTime != null  ">#{completeTime},</if>
+            <if test="problems != null  ">#{problems},</if>
+            <if test="changed != null  ">#{changed},</if>
+            <if test="totalScore != null  ">#{totalScore},</if>
+            <if test="checkNum != null  ">#{checkNum},</if>
+        </trim>
     </insert>
-	 
+    <!--修改检查记录-->
     <update id="updateCheckRecord" parameterType="CheckRecord">
         update check_record
         <trim prefix="SET" suffixOverrides=",">
@@ -96,19 +147,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
         where check_record_id = #{checkRecordId}
     </update>
-
-
+    <!--根据Id删除检查记录 -->
     <delete id="deleteCheckRecordById" parameterType="Integer">
         delete from check_record where check_record_id = #{checkRecordId}
     </delete>
-	
+
+    <!-- 批量删除检查记录数 -->
     <delete id="deleteCheckRecordByIds" parameterType="String">
-        delete from check_record where check_record_id in 
+        delete from check_record where check_record_id in
         <foreach item="checkRecordId" collection="array" open="(" separator="," close=")">
             #{checkRecordId}
         </foreach>
     </delete>
 
+    <!-- 查询总记录数 -->
     <select id="selectCount" resultType="int">
         select count(1) from check_record
         where dept_id = #{deptId} and shop_id = #{shopId} and create_time like  concat(#{dateToStr},'%')

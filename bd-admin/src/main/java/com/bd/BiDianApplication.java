@@ -15,7 +15,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 @MapperScan("com.bd.*.mapper")
 @ServletComponentScan
 public class BiDianApplication {
-    public static void main(String[] args) {
+          public static void main(String[] args) {
+              System.out.println(" ------------------------------------------------------------------------------必点海鲜程序正在启动------------------------------------------------------------------------------");
         SpringApplication.run(BiDianApplication.class, args);
     }
 }
