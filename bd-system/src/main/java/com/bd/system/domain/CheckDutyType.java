@@ -20,6 +20,8 @@ public class CheckDutyType extends BaseEntity
 	/** 检查负责人id */
 	private String dutyId;
 	private String dutyName;
+	/*检查段*/
+	private String problemName;
 	/** 检查图片 */
 	private String pictuer;
 	/** 检查得分 */
@@ -33,8 +35,24 @@ public class CheckDutyType extends BaseEntity
 	/** 检测评价 */
 	private String dictCode1;
 	private String dictCode2;
+	/*检查段id*/
+	private Integer problemId;
 
+	public String getProblemName() {
+		return problemName;
+	}
 
+	public void setProblemName(String problemName) {
+		this.problemName = problemName;
+	}
+
+	public Integer getProblemId() {
+		return problemId;
+	}
+
+	public void setProblemId(Integer problemId) {
+		this.problemId = problemId;
+	}
 
 	@Override
 	public String toString() {
@@ -42,6 +60,7 @@ public class CheckDutyType extends BaseEntity
 				"dctId=" + dctId +
 				", dutyId='" + dutyId + '\'' +
 				", dutyName='" + dutyName + '\'' +
+				", problemName='" + problemName + '\'' +
 				", pictuer='" + pictuer + '\'' +
 				", score=" + score +
 				", dictLabel='" + dictLabel + '\'' +
@@ -50,7 +69,7 @@ public class CheckDutyType extends BaseEntity
 				", dictCode='" + dictCode + '\'' +
 				", dictCode1='" + dictCode1 + '\'' +
 				", dictCode2='" + dictCode2 + '\'' +
-
+				", problemId=" + problemId +
 				'}';
 	}
 

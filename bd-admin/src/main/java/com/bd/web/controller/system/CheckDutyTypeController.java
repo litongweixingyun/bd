@@ -7,7 +7,9 @@ import com.bd.common.core.page.TableDataInfo;
 import com.bd.common.enums.BusinessType;
 import com.bd.common.utils.poi.ExcelUtil;
 import com.bd.system.domain.CheckDuty;
+import com.bd.system.domain.CheckDutyProblem;
 import com.bd.system.domain.CheckDutyType;
+import com.bd.system.service.ICheckDutyProblemService;
 import com.bd.system.service.ICheckDutyService;
 import com.bd.system.service.ICheckDutyTypeService;
 import com.bd.system.service.ISysDictDataService;
@@ -41,7 +43,8 @@ public class CheckDutyTypeController extends BaseController
 	@Autowired
 	private ISysDictDataService dictDateService;
 	@Autowired
-	private ISysDictDataService dictDataService;
+	private ICheckDutyProblemService checkDutyProblemService;
+
 	
 	@RequiresPermissions("system:checkDutyType:view")
 	@GetMapping()
@@ -85,7 +88,7 @@ public class CheckDutyTypeController extends BaseController
 	public String add(ModelMap map)
 	{
 		map.put("dutys", checkDutyService.selectCheckDutyList(new CheckDuty()));
-
+        map.put("problems",checkDutyProblemService.selectCheckDutyProblemList(new CheckDutyProblem()));
 
 		return prefix + "/add";
 	}

@@ -13,6 +13,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="dictCode1"    column="dict_code1"    />
         <result property="dictCode2"    column="dict_code2"    />
         <result property="dutyName" column="duty_name"/>
+        <result property="problemId" column="problem_id"/>
+        <result property="problemName" column="problem_Name"/>
     </resultMap>
 
 	<sql id="selectCheckDutyTypeVo">
@@ -23,9 +25,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     cc.score,
     (SELECT dict_label FROM sys_dict_data WHERE dict_code=cc.dict_code AND dict_type='sys_shop_area') dictLabel,
     (SELECT dict_label FROM sys_dict_data WHERE dict_code=cc.dict_code1 AND dict_type='check_duty_area') dictLabel1,
-    (SELECT dict_label FROM sys_dict_data WHERE dict_code=cc.dict_code2 AND dict_type='check_duty_pj')dictLabel2
+    (SELECT dict_label FROM sys_dict_data WHERE dict_code=cc.dict_code2 AND dict_type='check_duty_pj')dictLabel2,
+    p.problem_name
     FROM check_duty_type cc
     LEFT JOIN check_duty d ON d.duty_id = cc.duty_id
+    LEFT JOIN check_duty_problem p ON p.problem_id = cc.problem_id
     </sql >
     <select id="selectCheckDutyTypeList" parameterType="CheckDutyType" resultMap="CheckDutyTypeResult">
         <include refid="selectCheckDutyTypeVo"/>
@@ -37,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="dictCode != null "> and dict_code = #{dictCode}</if>
              <if test="dictCode1 != null "> and dict_code1 = #{dictCode1}</if>
              <if test="dictCode2 != null "> and dict_code2 = #{dictCode2}</if>
+            <if test="problemId != null "> and problemId = #{problemId}</if>
          </where>
     </select>
     <select id="selectCheckDutyTypeById" parameterType="Integer" resultMap="CheckDutyTypeResult">
@@ -53,6 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="dictCode != null  ">dict_code,</if>
 			<if test="dictCode1 != null " >dict_code1,</if>
 			<if test="dictCode2 != null  ">dict_code2,</if>
+            <if test="problemId != null "> problem_id</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="dutyId != null  ">#{dutyId},</if>
@@ -61,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="dictCode != null  ">#{dictCode},</if>
 			<if test="dictCode1 != null  ">#{dictCode1},</if>
 			<if test="dictCode2 != null  ">#{dictCode2},</if>
+            <if test="problemId != null ">#{problemId}</if>
          </trim>
     </insert>
 	 
@@ -73,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="dictCode != null  ">dict_code = #{dictCode},</if>
             <if test="dictCode1 != null  ">dict_code1 = #{dictCode1},</if>
             <if test="dictCode2 != null  ">dict_code2 = #{dictCode2},</if>
+            <if test="problemId != null "> problemId = #{problemId}</if>
         </trim>
         where dct_id = #{dctId}
     </update>

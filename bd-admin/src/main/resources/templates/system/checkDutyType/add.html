@@ -58,7 +58,15 @@
 					</select>
 				</div>
 			</div>
-
+			<div class="form-group">
+				<label class="col-sm-3 control-label">检查时段：</label>
+				<div class="col-sm-8">
+					<select id="problemId" name="problemId"
+							class="form-control">
+						<option th:each="problem:${problems}" th:value="${problem.problemId}" th:text="${problem.problemName}"></option>
+					</select>
+				</div>
+			</div>
 		</form>
 	</div>
     <div th:include="include::footer"></div>
@@ -94,6 +102,26 @@
 
                     for ( var i = 0; i < data.length; i++) {
                         t2.append("<option value='"+data[i].dutyId+"'>"+ data[i].dutyName+"</option>");
+                    }
+                }
+            })
+        });
+        $("#problemId").change(function(){
+            var problemId = $("#problemId").val();
+            if(problemId ==''){
+                return;
+            }
+
+            $.ajax({
+                url:'/system/checkDutyProblem/list/'+problemId,
+                async:false,
+                type:'get',
+
+                success:function(data){
+                    var t2 = $("#problemId").empty();
+
+                    for ( var i = 0; i < data.length; i++) {
+                        t2.append("<option value='"+data[i].problemId+"'>"+ data[i].problemName+"</option>");
                     }
                 }
             })
