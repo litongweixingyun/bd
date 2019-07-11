@@ -27,23 +27,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM check_duty_type cc
     LEFT JOIN check_duty d ON d.duty_id = cc.duty_id
     </sql >
+    <!--查询值班类型数据列表-->
+
     <select id="selectCheckDutyTypeList" parameterType="CheckDutyType" resultMap="CheckDutyTypeResult">
         <include refid="selectCheckDutyTypeVo"/>
         <where>
-            <if test="dctId != null "> and dct_id = #{dctId}</if>
-             <if test="dutyId != null "> and duty_id = #{dutyId}</if>
-             <if test="pictuer != null "> and pictuer = #{pictuer}</if>
-             <if test="score != null "> and score = #{score}</if>
+            <if test="dctId != null and dctId != 0 ">
+                and cc.dct_id = #{dctId}
+            </if>
+            <if test="score != null and score != '' ">
+                and cc.score = #{score}
+            </if>
+            <if test="dutyId != null and dutyId !=0 ">
+                and d.duty_id = #{dutyId}
+            </if>
+            <if test="dutyName != null and dutyName != ''">
+                AND d.duty_name like concat('%', #{dutyName}, '%')
+            </if>
              <if test="dictCode != null "> and dict_code = #{dictCode}</if>
              <if test="dictCode1 != null "> and dict_code1 = #{dictCode1}</if>
              <if test="dictCode2 != null "> and dict_code2 = #{dictCode2}</if>
          </where>
     </select>
+    <!--根据ID查询检查数据-->
+
     <select id="selectCheckDutyTypeById" parameterType="Integer" resultMap="CheckDutyTypeResult">
         <include refid="selectCheckDutyTypeVo"/>
         where dct_id = #{dctId}
     </select>
-        
+
+    <!--新增值班检查数据-->
     <insert id="insertCheckDutyType" parameterType="CheckDutyType" useGeneratedKeys="true" keyProperty="dctId">
         insert into check_duty_type
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -63,7 +76,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="dictCode2 != null  ">#{dictCode2},</if>
          </trim>
     </insert>
-	 
+
+    <!--修改值班类型-->
+
     <update id="updateCheckDutyType" parameterType="CheckDutyType">
         update check_duty_type
         <trim prefix="SET" suffixOverrides=",">
@@ -80,7 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteCheckDutyTypeById" parameterType="Integer">
         delete from check_duty_type where dct_id = #{dctId}
     </delete>
-	
+
     <delete id="deleteCheckDutyTypeByIds" parameterType="String">
         delete from check_duty_type where dct_id in 
         <foreach item="dctId" collection="array" open="(" separator="," close=")">

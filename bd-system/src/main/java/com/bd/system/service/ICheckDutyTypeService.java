@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 值班类型 服务层
  * 
- * @author luxuewei
+ * @author yuanqingjian
  * @date 2019-06-28
  */
 public interface ICheckDutyTypeService 

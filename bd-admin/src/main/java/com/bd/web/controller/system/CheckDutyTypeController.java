@@ -32,17 +32,13 @@ public class CheckDutyTypeController extends BaseController
     private String prefix = "system/checkDutyType";
 
 
-
-    //大萨达多放电饭煲梵蒂冈仍然的广泛地1大幅度发生
 	@Autowired
 	private ICheckDutyTypeService checkDutyTypeService;
 	@Autowired
 	private ICheckDutyService checkDutyService;
 	@Autowired
 	private ISysDictDataService dictDateService;
-	@Autowired
-	private ISysDictDataService dictDataService;
-	
+
 	@RequiresPermissions("system:checkDutyType:view")
 	@GetMapping()
 	public String checkDutyType()
@@ -75,7 +71,7 @@ public class CheckDutyTypeController extends BaseController
     {
     	List<CheckDutyType> list = checkDutyTypeService.selectCheckDutyTypeList(checkDutyType);
         ExcelUtil<CheckDutyType> util = new ExcelUtil<CheckDutyType>(CheckDutyType.class);
-        return util.exportExcel(list, "checkDutyType");
+        return util.exportExcel(list, "值班检查状况");
     }
 	
 	/**
@@ -110,6 +106,7 @@ public class CheckDutyTypeController extends BaseController
 	{
 		CheckDutyType checkDutyType = checkDutyTypeService.selectCheckDutyTypeById(dctId);
 		mmap.put("checkDutyType", checkDutyType);
+		mmap.put("dutys", checkDutyService.selectCheckDutyList(new CheckDuty()));
 	    return prefix + "/edit";
 	}
 	

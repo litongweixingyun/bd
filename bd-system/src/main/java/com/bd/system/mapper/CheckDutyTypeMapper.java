@@ -6,8 +6,8 @@ import java.util.List;
 /**
  * 值班类型 数据层
  * 
- * @author luxuewei
- * @date 2019-06-28
+ * @author yuanqingjian
+ * @date 2019-07-10
  */
 public interface CheckDutyTypeMapper 
 {

@@ -1,59 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bd.system.mapper.CheckDutyMapper">
-    
+
     <resultMap type="CheckDuty" id="CheckDutyResult">
+
         <result property="dutyId"    column="duty_id"    />
         <result property="dutyName"    column="duty_name"    />
         <result property="dutyTime"    column="duty_time"    />
         <result property="deptId"    column="dept_id"    />
         <result property="deptName"    column="dept_name"    />
     </resultMap>
-	
-	<sql id="selectCheckDutyVo">
-      SELECT
-	cc.duty_id,
-	cc.dept_id,
-	cc.duty_name,
-	cc.duty_time,
-	d.dept_name
 
-FROM
-	check_duty cc
-LEFT JOIN sys_dept d ON d.dept_id = cc.dept_id
+
+    <sql id="selectCheckDutyVo">
+          select
+        cd.duty_id,
+        cd.duty_name,
+        cd.duty_time,
+        cd.dept_id,
+        d.dept_name
+        from check_duty cd
+        left join sys_dept d on d.dept_id = cd.dept_id
 </sql>
-	
+    <!--查询值班数据列表-->
+
     <select id="selectCheckDutyList" parameterType="CheckDuty" resultMap="CheckDutyResult">
         <include refid="selectCheckDutyVo"/>
-        <where>  
-            <if test="dutyId != null "> and cc.duty_id = #{dutyId}</if>
-             <if test="dutyName != null  and dutyName != '' "> and cc.duty_name = #{dutyName}</if>
-             <if test="dutyTime != null "> and cc.duty_time = #{dutyTime}</if>
-             <if test="deptId != null "> and cc.dept_id = #{deptId}</if>
-         </where>
+        <where>
+            <if test="dutyId != null "> and cd.duty_id = #{dutyId}</if>
+            <if test="dutyName != null and dutyName != ''">
+                AND cd.duty_name like concat('%', #{dutyName}, '%')
+            </if>
+
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(cd.duty_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(cd.duty_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+            <if test="deptId != null and deptId != 0">
+                AND (cd.dept_id = #{deptId} OR cd.dept_id IN ( SELECT d.dept_id FROM sys_dept d WHERE FIND_IN_SET (#{deptId},ancestors) ))
+            </if>
+            <if test="deptName != null and deptName != ''">
+                AND d.dept_name like concat('%', #{deptName}, '%')
+            </if>
+            <!-- 数据范围过滤 -->
+            ${params.dataScope}
+        </where>
     </select>
-    
+    <!--根据ID查询值班数据-->
+
     <select id="selectCheckDutyById" parameterType="Integer" resultMap="CheckDutyResult">
         <include refid="selectCheckDutyVo"/>
         where duty_id = #{dutyId}
     </select>
-        
+
+    <!--新增值班检查数据-->
+
     <insert id="insertCheckDuty" parameterType="CheckDuty" useGeneratedKeys="true" keyProperty="dutyId">
         insert into check_duty
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="dutyName != null  and dutyName != ''  ">duty_name,</if>
-			<if test="dutyTime != null  ">duty_time,</if>
-			<if test="deptId != null  ">dept_id,</if>
-         </trim>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dutyName != null  and dutyName != ''  ">duty_name,</if>
+            <if test="dutyTime != null  ">duty_time,</if>
+            <if test="deptId != null  ">dept_id,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="dutyName != null  and dutyName != ''  ">#{dutyName},</if>
-			<if test="dutyTime != null  ">#{dutyTime},</if>
-			<if test="deptId != null  ">#{deptId},</if>
-         </trim>
+            <if test="dutyName != null  and dutyName != ''  ">#{dutyName},</if>
+            <if test="dutyTime != null  ">#{dutyTime},</if>
+            <if test="deptId != null  ">#{deptId},</if>
+        </trim>
     </insert>
-	 
+
+    <!--编辑值班检查数据-->
+
     <update id="updateCheckDuty" parameterType="CheckDuty">
         update check_duty
         <trim prefix="SET" suffixOverrides=",">
@@ -64,15 +85,17 @@ LEFT JOIN sys_dept d ON d.dept_id = cc.dept_id
         where duty_id = #{dutyId}
     </update>
 
-	<delete id="deleteCheckDutyById" parameterType="Integer">
+    <!--通过Id删除值班数据-->
+    <delete id="deleteCheckDutyById" parameterType="Integer">
         delete from check_duty where duty_id = #{dutyId}
     </delete>
-	
+
+    <!--批量删除值班数据-->
     <delete id="deleteCheckDutyByIds" parameterType="String">
-        delete from check_duty where duty_id in 
+        delete from check_duty where duty_id in
         <foreach item="dutyId" collection="array" open="(" separator="," close=")">
             #{dutyId}
         </foreach>
     </delete>
-    
+
 </mapper>
