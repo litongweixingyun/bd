@@ -12,26 +12,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="dictCode"    column="dict_code"    />
         <result property="dictCode1"    column="dict_code1"    />
         <result property="dictCode2"    column="dict_code2"    />
-        <result property="dictLabel" column="dict_label"/>
-        <result property="dictLabel1" column="dict_label"/>
-        <result property="dictLabel2" column="dict_label"/>
         <result property="dutyName" column="duty_name"/>
     </resultMap>
-	
+
 	<sql id="selectCheckDutyTypeVo">
-    SELECT
+   SELECT
     cc.dct_id,
     d.duty_name,
     cc.pictuer,
     cc.score,
-    sdd.dict_label,
-    sddd.dict_label,
-    sdddd.dict_label
+    (SELECT dict_label FROM sys_dict_data WHERE dict_code=cc.dict_code AND dict_type='sys_shop_area') dictLabel,
+    (SELECT dict_label FROM sys_dict_data WHERE dict_code=cc.dict_code1 AND dict_type='check_duty_area') dictLabel1,
+    (SELECT dict_label FROM sys_dict_data WHERE dict_code=cc.dict_code2 AND dict_type='check_duty_pj')dictLabel2
     FROM check_duty_type cc
     LEFT JOIN check_duty d ON d.duty_id = cc.duty_id
-    LEFT JOIN sys_dict_data sdd ON sdd.dict_code = cc.dict_code AND sdd.dict_type = 'sys_shop_area'
-    LEFT JOIN sys_dict_data sddd ON sddd.dict_code = cc.dict_code1 AND sddd.dict_type = 'check_duty_area'
-    LEFT JOIN sys_dict_data sdddd ON sdddd.dict_code = cc.dict_code2 AND sdddd.dict_type= 'check_duty_pj'
     </sql >
     <select id="selectCheckDutyTypeList" parameterType="CheckDutyType" resultMap="CheckDutyTypeResult">
         <include refid="selectCheckDutyTypeVo"/>
@@ -45,7 +39,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="dictCode2 != null "> and dict_code2 = #{dictCode2}</if>
          </where>
     </select>
-    
     <select id="selectCheckDutyTypeById" parameterType="Integer" resultMap="CheckDutyTypeResult">
         <include refid="selectCheckDutyTypeVo"/>
         where dct_id = #{dctId}
@@ -58,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="pictuer != null  and pictuer != ''  ">pictuer,</if>
 			<if test="score != null  ">score,</if>
 			<if test="dictCode != null  ">dict_code,</if>
-			<if test="dictCode1 != null  ">dict_code1,</if>
+			<if test="dictCode1 != null " >dict_code1,</if>
 			<if test="dictCode2 != null  ">dict_code2,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">

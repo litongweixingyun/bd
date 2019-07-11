@@ -99,7 +99,34 @@ public class BaseController
         rspData.setTotal(new PageInfo(list).getTotal());
         return rspData;
     }
-
+    /**
+     * 响应请求分页数据
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    protected TableDataInfo getDataTable1(List<?> list1)
+    {
+        TableDataInfo rspData = new TableDataInfo();
+        rspData.setCode(0);
+        rspData.setRows(list1);
+        rspData.setTotal(new PageInfo(list1).getTotal());
+        return rspData;
+    }
+    protected TableDataInfo getDataTable2(List<?> list2)
+    {
+        TableDataInfo rspData = new TableDataInfo();
+        rspData.setCode(0);
+        rspData.setRows(list2);
+        rspData.setTotal(new PageInfo(list2).getTotal());
+        return rspData;
+    }
+    protected TableDataInfo getDataTable3(List<?> list3)
+    {
+        TableDataInfo rspData = new TableDataInfo();
+        rspData.setCode(0);
+        rspData.setRows(list3);
+        rspData.setTotal(new PageInfo(list3).getTotal());
+        return rspData;
+    }
     /**
      * 响应返回结果
      * 

@@ -39,6 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</where>
 	</select>
+
 	
 	<select id="selectDictDataByType" parameterType="SysDictData" resultMap="SysDictDataResult">
 		<include refid="selectDictDataVo"/>

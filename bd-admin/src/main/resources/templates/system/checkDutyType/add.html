@@ -29,12 +29,21 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">检查项id：</label>
 				<div class="col-sm-8">
-					<select id="dictCode" name="dictCode" class="form-control m-b" th:with="type=${@dict.getType('check_duty_pj')}">
-						<!--<option th:each="dict : ${type}"
+					<select  name="dictCode" class="form-control m-b" th:with="type=${@dict.getType('sys_shop_area')}">
+						<option th:each="dict : ${type}"
 								th:text="${dict.dictLabel}"
-								th:value="${dict.dictValue}"></option>-->
-						<option th:each="dict:${dicts}" th:value="${dict.dictCode}" th:text="${dict.dictLabel}" ></option>
+								th:value="${dict.dictCode}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">检查内容：</label>
+				<div class="col-sm-8">
 
+					<select  name="dictCode1" class="form-control m-b" th:with="type=${@dict.getType('check_duty_area')}" >
+						<option th:each="dict : ${type}"
+								th:text="${dict.dictLabel}"
+								th:value="${dict.dictCode}"></option>
 					</select>
 				</div>
 			</div>
@@ -42,25 +51,14 @@
 				<label class="col-sm-3 control-label">检测评价：</label>
 				<div class="col-sm-8">
 
-					<select   name="dictCode1" class="form-control m-b"  th:with="type=${@dict.getType('check_duty_pj')}" >
+					<select  name="dictCode2" class="form-control m-b" th:with="type=${@dict.getType('check_duty_pj')}" >
 						<option th:each="dict : ${type}"
 								th:text="${dict.dictLabel}"
-								th:value="${dict.dictValue}"></option>
-
+								th:value="${dict.dictCode}"></option>
 					</select>
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">检查内容：</label>
-				<div class="col-sm-8">
 
-					<select name="dictCode2" class="form-control m-b" th:with="type=${@dict.getType('check_duty_area')}">
-						<option th:each="dict : ${type}"
-								th:text="${dict.dictLabel}"
-								th:value="${dict.dictValue}"></option>
-					</select>
-				</div>
-			</div>
 		</form>
 	</div>
     <div th:include="include::footer"></div>
@@ -80,28 +78,6 @@
 	            $.operate.save(prefix + "/add", $('#form-checkDutyType-add').serialize());
 	        }
 	    }
-
-        $("#dictCode").change(function(){
-            var dictCode = $("#dictCode").val();
-            if(dictCode ==''){
-                return;
-            }
-
-            $.ajax({
-                url:'/system/checkDutyType/list1'+dictCode,
-                async:false,
-                type:'get',
-
-                success:function(data){
-                    if(dictCode>39&&dictCode<62){
-                        var t2 = $("#dictCode").empty()
-                        for ( var i = 0; i < data.length; i++) {
-                            t2.append("<option value='"+data[i].dictCode+"'>"+ data[i].dictLabel+"</option>");
-                    }
-					}
-                }
-            })
-        });
         $("#dutyId").change(function(){
             var dutyId = $("#dutyId").val();
             if(dutyId ==''){

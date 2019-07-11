@@ -8,7 +8,6 @@ import com.bd.common.enums.BusinessType;
 import com.bd.common.utils.poi.ExcelUtil;
 import com.bd.system.domain.CheckDuty;
 import com.bd.system.domain.CheckDutyType;
-import com.bd.system.domain.SysDictData;
 import com.bd.system.service.ICheckDutyService;
 import com.bd.system.service.ICheckDutyTypeService;
 import com.bd.system.service.ISysDictDataService;
@@ -65,16 +64,7 @@ public class CheckDutyTypeController extends BaseController
         return getDataTable(list);
 	}
 
-	@PostMapping("/list1")
-	@RequiresPermissions("system:checkDutyType:list1")
-	@ResponseBody
-	public TableDataInfo list(SysDictData dictData)
-	{
-		startPage();
-		List<SysDictData> list = dictDataService.selectDictDataList1(dictData);
 
-		return getDataTable(list);
-	}
 	/**
 	 * 导出值班类型列表
 	 */
@@ -95,7 +85,8 @@ public class CheckDutyTypeController extends BaseController
 	public String add(ModelMap map)
 	{
 		map.put("dutys", checkDutyService.selectCheckDutyList(new CheckDuty()));
-        map.put("dicts",dictDateService.selectDictDataList(new SysDictData()));
+
+
 		return prefix + "/add";
 	}
 	
@@ -119,7 +110,6 @@ public class CheckDutyTypeController extends BaseController
 	{
 		CheckDutyType checkDutyType = checkDutyTypeService.selectCheckDutyTypeById(dctId);
 		mmap.put("checkDutyType", checkDutyType);
-		mmap.put("dutys", checkDutyService.selectCheckDutyList(new CheckDuty()));
 	    return prefix + "/edit";
 	}
 	
